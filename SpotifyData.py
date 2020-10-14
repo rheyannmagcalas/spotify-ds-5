@@ -43,8 +43,8 @@ st.sidebar.markdown("<h1 style='text-align: center;margin-bottom:50px'>DS Cohort
 
 add_selectbox = st.sidebar.radio(
     "",
-    ("Introduction and Problem Statement", "List of Tools", "Data Sourcing", "Data Set", "Data Cleaning", 
-     "Exploratory Data Analysis", "Possible Business Strategies", "Recommender Engine", 
+    ("Introduction and Problem Statement", "List of Tools", "Data Process", "Data Sourcing", "Data Set", 
+     "Data Cleaning", "Exploratory Data Analysis", "Track Genre Classification", "Recommender Engine", 
      "Possible Business Strategies", "Contributors")
 )
 
@@ -64,14 +64,6 @@ if add_selectbox == 'Introduction and Problem Statement':
                 
     st.write('<b>CLIENT:</b>', unsafe_allow_html=True)
     st.markdown("<ul>"                "<li><i>Artist</i>: Based on listener data, which artist should client collaborate with in their next release?</li>"                "<li><i>Production:</i> Based on the listener data, which genre should client focus on their next release? </li>"                "<li><i>Promotions:</i> Based on the listener data, which artists should we market together in featured playlists/events? </li>"                "</ul>", unsafe_allow_html=True)
-
-
-# In[ ]:
-
-
-elif add_selectbox == 'Outline':
-    st.subheader('Outline')
-    st.write('-----------------------------')
 
 
 # In[ ]:
@@ -110,9 +102,44 @@ elif add_selectbox == 'List of Tools':
 # In[ ]:
 
 
+elif add_selectbox == 'Data Process':
+    st.subheader('Data Process')
+    st.write('-----------------------------')
+    st.markdown("<ul>"                "<li>Data Sourcing</li>"                "<li>Data Cleaning</li>"                "<li>Creation of Market Data Science Questions</li>"                "<li>Exploratory Data Analysis</li>"                "<li>Track Genre Classification</li>"                "<li>Recommendation Engine</li>"                "<li>Deployment</li>"                 "</ul>", unsafe_allow_html=True)
+
+
+# In[ ]:
+
+
 elif add_selectbox == 'Data Sourcing':
     st.subheader('Data Sourcing')
     st.write('-----------------------------')
+    st.write('1. Web scraping from https://spotifycharts.com/regional', unsafe_allow_html=True)
+    st.write("&nbsp;<span style='font-size:14px;'>Parameters:</span>", unsafe_allow_html=True)
+    st.code("start_date = first target date in YYYY-mm-dd format", language='python')
+    st.code("end_date = second target date in YYYY-mm-dd format", language='python')
+    st.code('regions = ["global", "us", "gb", "ad", "ar", "at", "au", "be", "bg", "bo", "br", "ca", "ch", "cl", "co", "cr", "cy", "cz", "de","dk", "do", "ec", "ee", "es", "fi", "fr", "gr", "gt", "hk", "hn", "hu", "id", "ie", "is", "it", "jp", "lt", "lu", "lv", "mc", "mt", "mx", "my", "ni", "nl", "no", "nz", "pa", "pe","ph", "pl", "pt", "py", "se", "sg", "sk", "sv", "tr", "tw", "uy"]', language='python')
+    
+    st.write('2. <a href="https://developer.spotify.com/documentation/web-api/reference/tracks/get-audio-features/" target="_blank"> '             'Get Audio Features for a Track</a>', unsafe_allow_html=True)
+    st.code("GET https://api.spotify.com/v1/audio-features/{id}", language='python')
+    st.write("&nbsp;<span style='font-size:14px;'>Parameter:</span>", unsafe_allow_html=True)
+    st.code("id = The Spotify ID for the playlist.", language='python')
+    
+    st.write('3. <a href="https://developer.spotify.com/documentation/web-api/reference/artists/get-artist/" target="_blank"> '             'Get Artist Details</a>', unsafe_allow_html=True)
+    st.code("GET https://api.spotify.com/v1/artists/{id}", language='python')
+    st.write("&nbsp;<span style='font-size:14px;'>Parameter:</span>", unsafe_allow_html=True)
+    st.code("id = The Spotify ID for the artist.", language='python')
+    
+    
+    st.write('4. <a href="https://developer.spotify.com/documentation/web-api/reference/search/search/" target="_blank"> '             'Get Sample Playlist Details</a>', unsafe_allow_html=True)
+    
+    st.write("&nbsp;<span style='font-size:14px;'>Parameters:</span>", unsafe_allow_html=True)
+    st.code("q = Search query keywords", language='python')
+    st.code("type = A comma-separated list of item types to search across.", language='python')
+    st.code("market = An ISO 3166-1 alpha-2 country code", language='python')
+    
+    st.write('5. <a href="https://pypi.org/project/wikipedia/" target="_blank"> '             'Checking if an artist is a Filipino</a>', unsafe_allow_html=True)
+    
 
 
 # In[ ]:
@@ -122,8 +149,10 @@ elif add_selectbox == 'Data Set':
     st.subheader('Data Set')
     st.write('-----------------------------')
     
-    st.write('<b>Daily Charts:</b>', unsafe_allow_html=True)
-    st.markdown('<b>Sample Data Set:</b>', unsafe_allow_html=True)
+    st.markdown('<b>Data Dimensions:</b> Rows: 197800 Columns: 27', unsafe_allow_html=True)
+    
+    st.write('<b> Top 200 Daily Charts:</b>', unsafe_allow_html=True)
+    st.markdown('Sample Data Set:', unsafe_allow_html=True)
     dataset_sample = {
                       'date': ['2018-01-01', '2018-01-01', '2018-01-01', '2018-01-01', '2018-01-01'], 
                       'position': ['1', '2', '3', '4', '5'],
@@ -136,8 +165,8 @@ elif add_selectbox == 'Data Set':
     
     st.table(dataset_sample)
     
-    st.markdown('<b>Data Dimensions:</b> Rows: 541909 Columns: 8', unsafe_allow_html=True)
-    st.markdown('<b>Data Description:</b>', unsafe_allow_html=True)
+    
+    st.markdown('Data Description:', unsafe_allow_html=True)
     
     data_details = {
         'columns': ['date', 'position', 'track_id', 'track_name', 'artist', 'streams'],
@@ -146,6 +175,58 @@ elif add_selectbox == 'Data Set':
     }
         
     st.table(pd.DataFrame(data_details).set_index('columns'))
+    
+    st.write('<b> Track Audio Features:</b>', unsafe_allow_html=True)
+    st.markdown('<b>Sample Data Set:</b>', unsafe_allow_html=True)
+    dataset_sample = {
+                      'duration_ms': ['2018-01-01', '2018-01-01', '2018-01-01', '2018-01-01', '2018-01-01'], 
+                      'key': ['1', '2', '3', '4', '5'],
+                      'mode': ['0ofbQMrRDsUaVKq2mGLEAb', '0tgVpDi06FyKpA1z0VMD4v', '3hBBKuWJfxlIlnd9QFoC8k', 
+                                   '1mXVgsBdtIVeCLJnSnmtdV', '2ekn2ttSfGqwhhate0LSR0'],
+                      'acousticness': ['1', '2', '3', '4', '5'],
+                      'danceability': ['1', '2', '3', '4', '5'],
+                      'energy': ['1', '2', '3', '4', '5'],
+                      'instrumentalness': ['1', '2', '3', '4', '5'],
+                      'liveness': ['1', '2', '3', '4', '5'],
+                      'loudness': ['1', '2', '3', '4', '5'],
+                      'speechiness': ['1', '2', '3', '4', '5'],
+                      'valence': ['1', '2', '3', '4', '5'],
+                      'tempo': ['1', '2', '3', '4', '5'],
+                     }
+    st.table(dataset_sample)
+    data_details = {
+        'columns': ['duration_ms', 'key', 'mode', 'acousticness', 'danceability', 'energy', 'instrumentalness',
+                   'liveness', 'loudness', 'speechiness', 'valence', 'tempo'],
+        'Description': ['The duration of the track in milliseconds.', 'The estimated overall key of the track.',
+                       'Indicates the modality (major or minor) of a track, the type of scale from which its melodic content is derived.',
+                       'A confidence measure from 0.0 to 1.0 of whether the track is acoustic.', 
+                       'Describes how suitable a track is for dancing based on a combination of musical elements including '\
+                        'tempo, rhythm stability, beat strength, and overall regularity.',
+                       'A measure from 0.0 to 1.0 and represents a perceptual measure of intensity and activity.',
+                       'Predicts whether a track contains no vocals.', 'Detects the presence of an audience in the recording.',
+                        'The overall loudness of a track in decibels (dB).', 'Detects the presence of spoken words in a track.',
+                        'A measure from 0.0 to 1.0 describing the musical positiveness conveyed by a track.', 
+                        'The overall estimated tempo of a track in beats per minute (BPM). '
+                       ],
+#         'Data Types': ['int64', 'object', 'object', 'object', 'object', 'int64']
+    }
+    
+    st.table(pd.DataFrame(data_details).set_index('columns'))
+    
+    st.markdown('<b>Data Description:</b>', unsafe_allow_html=True)
+    st.write('<b> Artist Details:</b>', unsafe_allow_html=True)
+    st.markdown('<b>Sample Data Set:</b>', unsafe_allow_html=True)
+    dataset_sample = {
+                      'artist_id': ['2018-01-01', '2018-01-01', '2018-01-01', '2018-01-01', '2018-01-01'], 
+                      'artist_name': ['1', '2', '3', '4', '5'],
+                      'album_id': ['0ofbQMrRDsUaVKq2mGLEAb', '0tgVpDi06FyKpA1z0VMD4v', '3hBBKuWJfxlIlnd9QFoC8k', 
+                                   '1mXVgsBdtIVeCLJnSnmtdV', '2ekn2ttSfGqwhhate0LSR0'],
+                      'artist_popularity': ['1', '2', '3', '4', '5'],
+                     }
+    
+    st.table(dataset_sample)
+    
+    st.markdown('<b>Data Description:</b>', unsafe_allow_html=True)
 
 
 # In[ ]:
