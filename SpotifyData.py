@@ -39,8 +39,9 @@ st.sidebar.markdown("<h1 style='text-align: center;margin-bottom:50px'>DS Cohort
 
 add_selectbox = st.sidebar.radio(
     "",
-    ("Introduction and Problem Statement", "Outline", "List of Tools", "Data Set", "Data Cleaning", 
-     "Exploratory Data Analysis", "Recommendations", "Contributors")
+    ("Introduction and Problem Statement", "List of Tools", "Data Set", "Data Cleaning", 
+     "Exploratory Data Analysis", "Possible Business Strategies", "Recommender Engine", 
+     "Possible Business Strategies", "Contributors")
 )
 
 
@@ -154,8 +155,24 @@ elif add_selectbox == 'Exploratory Data Analysis':
 # In[ ]:
 
 
-elif add_selectbox == 'Recommendations':
-    st.subheader('Recommendations')
+elif add_selectbox == 'Client Track Classification':
+    st.subheader('Client Track Classification')
+    st.write('-----------------------------')
+
+
+# In[ ]:
+
+
+elif add_selectbox == 'Recommender Engine':
+    st.subheader('Recommender Engine')
+    st.write('-----------------------------')
+
+
+# In[ ]:
+
+
+elif add_selectbox == 'Possible Business Strategies':
+    st.subheader('Possible Business Strategies')
     st.write('-----------------------------')
 
 
