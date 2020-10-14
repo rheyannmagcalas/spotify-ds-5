@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[1]:
+# In[25]:
 
 
 import matplotlib.pyplot as plt
@@ -18,20 +18,24 @@ from bokeh.themes import built_in_themes
 from bokeh.io import curdoc
 
 from datetime import date, timedelta
+from IPython import get_ipython
 from PIL import Image
 from streamlit import caching
 
 
-# In[2]:
+# ### Setting Title of the Web
+
+# In[11]:
 
 
 st.title('Spotify Data')
 
 
-# In[3]:
+# ### Side Bar Information
+
+# In[18]:
 
 
-## Side Bar Information
 image = Image.open('logo/eskwelabs.png')
 st.sidebar.image(image, caption='', use_column_width=True)
 st.sidebar.markdown("<h1 style='text-align: center;margin-bottom:50px'>DS Cohort V</h1>", unsafe_allow_html=True)
@@ -39,13 +43,13 @@ st.sidebar.markdown("<h1 style='text-align: center;margin-bottom:50px'>DS Cohort
 
 add_selectbox = st.sidebar.radio(
     "",
-    ("Introduction and Problem Statement", "List of Tools", "Data Set", "Data Cleaning", 
+    ("Introduction and Problem Statement", "List of Tools", "Data Sourcing", "Data Set", "Data Cleaning", 
      "Exploratory Data Analysis", "Possible Business Strategies", "Recommender Engine", 
      "Possible Business Strategies", "Contributors")
 )
 
 
-# In[ ]:
+# In[23]:
 
 
 if add_selectbox == 'Introduction and Problem Statement':
@@ -101,6 +105,14 @@ elif add_selectbox == 'List of Tools':
     st.image(image, caption='', width=300, height=150)
     image = Image.open('logo/numpy.png').convert('RGB')
     st.image(image, caption='', width=300, height=150)
+
+
+# In[ ]:
+
+
+elif add_selectbox == 'Data Sourcing':
+    st.subheader('Data Sourcing')
+    st.write('-----------------------------')
 
 
 # In[ ]:
@@ -166,6 +178,8 @@ elif add_selectbox == 'Client Track Classification':
 elif add_selectbox == 'Recommender Engine':
     st.subheader('Recommender Engine')
     st.write('-----------------------------')
+    user_input = st.text_input("Song Title")
+    st.write(user_input)
 
 
 # In[ ]:
