@@ -43,7 +43,7 @@ st.sidebar.markdown("<h1 style='text-align: center;margin-bottom:50px'>DS Cohort
 
 add_selectbox = st.sidebar.radio(
     "",
-    ("Introduction and Problem Statement", "List of Tools", "Data Process", "Data Sourcing", "Data Set", 
+    ("Introduction and Problem Statement", "Client", "List of Tools", "Process Flow", "Data Sourcing", "Data Set", 
      "Data Cleaning", "Exploratory Data Analysis", "Track Genre Classification", "Recommender Engine", 
      "Possible Business Strategies", "Contributors")
 )
@@ -69,10 +69,18 @@ if add_selectbox == 'Introduction and Problem Statement':
 # In[ ]:
 
 
+elif add_selectbox == 'Client':
+    st.write('-----------------------------')
+    image = Image.open('logo/client.png').convert('RGB')
+    st.image(image, caption='Manila Grey', width=300, height=150)
+
+
+# In[ ]:
+
+
 elif add_selectbox == 'List of Tools':
     st.subheader('List of Tools')
     st.write('-----------------------------')
-    st.write('-----------------------------------------------------------------------') 
     image = Image.open('logo/spotify.png').convert('RGB')
     st.image(image, caption='', width=300, height=150)
     image = Image.open('logo/jupyter.png').convert('RGB')
