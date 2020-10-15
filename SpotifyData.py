@@ -43,8 +43,8 @@ st.sidebar.markdown("<h1 style='text-align: center;margin-bottom:50px'>DS Cohort
 
 add_selectbox = st.sidebar.radio(
     "",
-    ("Introduction and Problem Statement", "Client", "List of Tools", "Process Flow", "Data Sourcing", "Data Set", 
-     "Data Cleaning", "Exploratory Data Analysis", "Track Genre Classification", "Recommender Engine", 
+    ("Introduction", "Client", "List of Tools", "Process Flow", "Data Sourcing", "Data Set", 
+     "Data Cleaning", "Exploratory Data Analysis", "Song Genre Classification", "Recommender Engine", 
      "Possible Business Strategies", "Contributors")
 )
 
@@ -52,7 +52,7 @@ add_selectbox = st.sidebar.radio(
 # In[23]:
 
 
-if add_selectbox == 'Introduction and Problem Statement':
+if add_selectbox == 'Introduction':
     st.write('')
     st.subheader('Introduction')
     st.write('-----------------------------------------------------------------------') 
@@ -79,6 +79,10 @@ elif add_selectbox == 'Client':
 
     st.write('Filipino-Canadian group MANILA GREY is here to help bridge the East and West. The R&B duo '             'is comprised of childhood friends Neeko and Soliven, who grew up in Vancouver at a time when there were '             'few Asian personalities to serve as influences.')
     
+    st.write("<b>Genre:</b> bc underground hip hop, canadian hip hop, trap soul", unsafe_allow_html=True)
+    st.write("<b>Spotify Popularity:</b> 56", unsafe_allow_html=True)
+    st.write("<b>Total Followers:</b> 67077", unsafe_allow_html=True)
+    
     st.write('<b>Albums</b>', unsafe_allow_html=True)
     
     data_details = {
@@ -97,18 +101,6 @@ elif add_selectbox == 'Client':
     
     st.write('<br><br><b>Singles</b>', unsafe_allow_html=True)
     st.write('<table>'             '<tr>'                 '<td><b>Title</b></td><td><b>Release Date</b></td> <td><b>Spotify Link</b></td>'             '</tr>'             '<tr>'                 '<td>Shibuya</td><td>2020-08-26</td>'                 '<td><a href="https://open.spotify.com/album/0C3NEeNrQGx9i189EuWglz" target="_blank">Listen</a></td>'             '</tr>'             '<tr>'                 '<td>Blue Vegata</td><td>2020-07-29</td>'                 '<td><a href="https://open.spotify.com/album/3pbG0i2bdjZVFuzd89adGd" target="_blank">Listen</a></td>'             '</tr>'             '<tr>'                 '<td>Youth Water</td><td>2017-05-15</td>'                 '<td><a href="https://open.spotify.com/album/32MOJzuCDZsviw1hfBDOfk" target="_blank">Listen</a></td>'             '</tr>'             '<tr>'                 '<td>Friends of Friends</td><td>2018-02-23</td>'                 '<td><a href="https://open.spotify.com/album/4NzqaQYVb0SbPaKlAH0UCE" target="_blank">Listen</a></td>'             '</tr>'             '<tr>'                 '<td>Midnight</td><td>2017-12-08</td>'                 '<td><a href="https://open.spotify.com/album/7n9LerpieN1jsQLDV0NSe7" target="_blank">Listen</a></td>'             '</tr>'             '</table>', unsafe_allow_html=True) 
-    #st.table(pd.DataFrame(data_details).set_index('album_name'))
-    
-    
-#     st.write('<b>Singles</b>', unsafe_allow_html=True)
-    
-#     data_details = {
-#         'single_name': ['No Saints Loading Under Palm Shade', 'Shibuya', 'Blue Vegata', 'Youth Water', 
-#                         'Friends of Friends', 'Midnight'],
-#         'Release Date': ['2017-10-13', '2020-08-26', '2020-07-29', '2017-05-15', '2018-02-23',  '2017-12-08']
-#     }
-    
-#     st.table(pd.DataFrame(data_details).set_index('single_name'))
     
     st.write('<br><br>More Info:<a href="https://www.manilagrey.com/" target="_blank">Website</a>,   '             '<a href="https://open.spotify.com/artist/7KC9q5wx0bxMD5ABgLCoEd" target="_blank">Spotify</a>,     '             '<a href="https://www.youtube.com/channel/UCUNC9hmB6I7MvY2w2LF5fUQ" target="_blank">Youtube</a>     '             '<a href="https://www.instagram.com/manilagrey/?hl=en" target="_blank">Instagram</a>'
              , unsafe_allow_html=True)
@@ -149,8 +141,8 @@ elif add_selectbox == 'List of Tools':
 # In[ ]:
 
 
-elif add_selectbox == 'Data Process':
-    st.subheader('Data Process')
+elif add_selectbox == 'Process Flow':
+    st.subheader('Process Flow')
     st.write('-----------------------------')
     st.markdown("<ul>"                "<li>Data Sourcing</li>"                "<li>Data Cleaning</li>"                "<li>Creation of Market Data Science Questions</li>"                "<li>Exploratory Data Analysis</li>"                "<li>Track Genre Classification</li>"                "<li>Recommendation Engine</li>"                "<li>Deployment</li>"                 "</ul>", unsafe_allow_html=True)
 
@@ -295,8 +287,8 @@ elif add_selectbox == 'Exploratory Data Analysis':
 # In[ ]:
 
 
-elif add_selectbox == 'Client Track Classification':
-    st.subheader('Client Track Classification')
+elif add_selectbox == 'Song Genre Classification':
+    st.subheader('Song Genre Classification')
     st.write('-----------------------------')
 
 
