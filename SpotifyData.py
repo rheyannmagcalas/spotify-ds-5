@@ -70,9 +70,48 @@ if add_selectbox == 'Introduction and Problem Statement':
 
 
 elif add_selectbox == 'Client':
+    st.subheader('Client')
     st.write('-----------------------------')
     image = Image.open('logo/client.png').convert('RGB')
-    st.image(image, caption='Manila Grey', width=300, height=150)
+    st.image(image, caption='', width=800, height=200)
+    
+    st.write('<h3><b>Manila Grey</b></h3> Musical duo <br><br>', unsafe_allow_html=True)
+
+    st.write('Filipino-Canadian group MANILA GREY is here to help bridge the East and West. The R&B duo '             'is comprised of childhood friends Neeko and Soliven, who grew up in Vancouver at a time when there were '             'few Asian personalities to serve as influences.')
+    
+    st.write('<b>Albums</b>', unsafe_allow_html=True)
+    
+    data_details = {
+        'album_name': ['No Saints Loading', 'No Saints Under Palm Shade'],
+        'Total Tracks': ['10', '6'],
+        'Release Date': ['2019-11-27', '2017-10-13']
+    }
+     
+    st.write('<table>'             '<tr>'                 '<td><b>Title</b></td> <td><b>Total Tracks</b></td> <td><b>Release Date</b></td> <td><b>Spotify Link</b></td>'             '</tr>'             '<tr>'                 '<td>No Saints Loading</td><td>10</td><td>2019-11-27</td>'                 '<td><a href="https://open.spotify.com/album/2wNYSXK9UBfBj5sGYOJpfT" target="_blank">Listen</a></td>'             '</tr>'
+             '<tr>'\
+                 '<td>No Saints Under Palm Shade</td><td>6</td><td>2017-10-13</td>'\
+                 '<td><a href="https://open.spotify.com/album/58ToNt6xB7YugO9rhC7rEo" target="_blank">Listen</a></td>'\
+             '</tr>'
+             
+             '</table>', unsafe_allow_html=True)  
+    
+    st.write('<br><br><b>Singles</b>', unsafe_allow_html=True)
+    st.write('<table>'             '<tr>'                 '<td><b>Title</b></td><td><b>Release Date</b></td> <td><b>Spotify Link</b></td>'             '</tr>'             '<tr>'                 '<td>Shibuya</td><td>2020-08-26</td>'                 '<td><a href="https://open.spotify.com/album/0C3NEeNrQGx9i189EuWglz" target="_blank">Listen</a></td>'             '</tr>'             '<tr>'                 '<td>Blue Vegata</td><td>2020-07-29</td>'                 '<td><a href="https://open.spotify.com/album/3pbG0i2bdjZVFuzd89adGd" target="_blank">Listen</a></td>'             '</tr>'             '<tr>'                 '<td>Youth Water</td><td>2017-05-15</td>'                 '<td><a href="https://open.spotify.com/album/32MOJzuCDZsviw1hfBDOfk" target="_blank">Listen</a></td>'             '</tr>'             '<tr>'                 '<td>Friends of Friends</td><td>2018-02-23</td>'                 '<td><a href="https://open.spotify.com/album/4NzqaQYVb0SbPaKlAH0UCE" target="_blank">Listen</a></td>'             '</tr>'             '<tr>'                 '<td>Midnight</td><td>2017-12-08</td>'                 '<td><a href="https://open.spotify.com/album/7n9LerpieN1jsQLDV0NSe7" target="_blank">Listen</a></td>'             '</tr>'             '</table>', unsafe_allow_html=True) 
+    #st.table(pd.DataFrame(data_details).set_index('album_name'))
+    
+    
+#     st.write('<b>Singles</b>', unsafe_allow_html=True)
+    
+#     data_details = {
+#         'single_name': ['No Saints Loading Under Palm Shade', 'Shibuya', 'Blue Vegata', 'Youth Water', 
+#                         'Friends of Friends', 'Midnight'],
+#         'Release Date': ['2017-10-13', '2020-08-26', '2020-07-29', '2017-05-15', '2018-02-23',  '2017-12-08']
+#     }
+    
+#     st.table(pd.DataFrame(data_details).set_index('single_name'))
+    
+    st.write('<br><br>More Info:<a href="https://www.manilagrey.com/" target="_blank">Website</a>,   '             '<a href="https://open.spotify.com/artist/7KC9q5wx0bxMD5ABgLCoEd" target="_blank">Spotify</a>,     '             '<a href="https://www.youtube.com/channel/UCUNC9hmB6I7MvY2w2LF5fUQ" target="_blank">Youtube</a>     '             '<a href="https://www.instagram.com/manilagrey/?hl=en" target="_blank">Instagram</a>'
+             , unsafe_allow_html=True)
 
 
 # In[ ]:
