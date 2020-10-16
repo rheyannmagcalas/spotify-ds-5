@@ -82,11 +82,17 @@ elif add_selectbox == 'Client':
 
     st.write('Filipino-Canadian group MANILA GREY is here to help bridge the East and West. The R&B duo '             'is comprised of childhood friends Neeko and Soliven, who grew up in Vancouver at a time when there were '             'few Asian personalities to serve as influences.')
     
-
-    st.write("<b>Spotify Popularity:</b> 56", unsafe_allow_html=True)
-    st.write("<b>Total Followers:</b> 67077", unsafe_allow_html=True)
-    st.write("<b>Monthly Listeners:</b> 246030", unsafe_allow_html=True)
+    st.write('-----------------------------')
+    st.text('Spotify Statistics as of 10/16/2020')
+    st.write('<table>'             '<tr><td><b>Popularity</b></td><td><b>Total Followers</b></td><td><b>Monthly Listeners</b></td></tr>'             '<tr><td>56</td><td>67077</td><td>246030</td></tr>'             '</table><br/>', unsafe_allow_html=True)
     
+    st.text('Where People Listens as of 10/16/2020')
+    st.write('<table>'             '<tr><td>Quezon City, PH</td><td>17,276 Listeners</td></tr>'             '<tr><td>Toronto, Ca</td><td>8, 963 Listeners</td></tr>'             '<tr><td>Vancouver, Ca</td><td>8, 155 Listeners</td></tr>'             '<tr><td>Makati City, PH</td><td>6, 596 Listeners</td></tr>'             '<tr><td>Manila, PH</td><td>6, 204 Listeners</td></tr>'             '</table><br/>', unsafe_allow_html=True)
+    st.write('-----------------------------')
+    st.write('<b>Playlist</b>', unsafe_allow_html=True)
+    st.write('<table><tr><td><iframe src="https://open.spotify.com/embed/playlist/37i9dQZF1DX7FY5ma9162x" '             'width="300" height="100" frameborder="0" allowtransparency="true" allow="encrypted-media">'             '</iframe></td></tr>'             '<tr><td><iframe src="https://open.spotify.com/embed/playlist/37i9dQZF1DWW4igXXl2Qkp" '             'width="300" height="100" frameborder="0" allowtransparency="true" allow="encrypted-media">'             '</iframe></td></tr>'             '<tr><td><iframe src="https://open.spotify.com/embed/playlist/1Os7m597ihMJ4xTohCkZIz" '             'width="300" height="100" frameborder="0" allowtransparency="true" allow="encrypted-media">'             '</iframe></td></tr>'             '<tr><td><iframe src="https://open.spotify.com/embed/playlist/37i9dQZF1DX59ogDi1Z2XL" '             'width="300" height="100" frameborder="0" allowtransparency="true" allow="encrypted-media">'             '</iframe></td></tr>'             '<tr><td><iframe src="https://open.spotify.com/embed/playlist/37i9dQZF1DX2WkIBRaChxW" '             'width="300" height="100" frameborder="0" allowtransparency="true" allow="encrypted-media">'             '</iframe></td></tr>'             '</table>', unsafe_allow_html=True)
+    
+    st.write('-----------------------------')
     st.write('<b>Albums</b>', unsafe_allow_html=True)
     
     data_details = {
@@ -103,7 +109,7 @@ elif add_selectbox == 'Client':
              '</tr>'
              '</table>', unsafe_allow_html=True)  
     
-    st.write('<br><br><b>Singles</b>', unsafe_allow_html=True)
+    st.write('<br><br><b>Singles and EPS</b>', unsafe_allow_html=True)
     st.write('<table>'             '<tr>'                 '<td><b>Title</b></td><td><b>Release Date</b></td> <td><b>Spotify Link</b></td>'             '</tr>'             '<tr>'                 '<td>Shibuya</td><td>2020-08-26</td>'                 '<td><iframe src="https://open.spotify.com/embed/album/0C3NEeNrQGx9i189EuWglz" width="300" height="100" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe></td>'             '</tr>'             '<tr>'                 '<td>Blue Vegata</td><td>2020-07-29</td>'                 '<td><iframe src="https://open.spotify.com/embed/album/3pbG0i2bdjZVFuzd89adGd" width="300" height="100" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe></td>'             '</tr>'             '<tr>'                 '<td>Silver Skies</td><td>2019</td>'                 '<td><iframe src="https://open.spotify.com/embed/album/1zs9AJzF5Z8rvSuHvCfnLp" width="300" height="100" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe></td>'             '</tr>'             '<tr>'                 '<td>Youth Water</td><td>2017-05-15</td>'                 '<td><iframe src="https://open.spotify.com/embed/album/32MOJzuCDZsviw1hfBDOfk" width="300" height="100" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe></td>'             '</tr>'             '<tr>'                 '<td>Friends of Friends</td><td>2018-02-23</td>'                 '<td><iframe src="https://open.spotify.com/embed/album/2m4zj5J0Ta6Mt43hadaML9" width="300" height="100" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe></td>'             '</tr>'             '<tr>'                 '<td>Midnight</td><td>2017-12-08</td>'                 '<td><iframe src="https://open.spotify.com/embed/album/7n9LerpieN1jsQLDV0NSe7" width="300" height="100" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe></td>'             '</tr>'             '<tr>'                 '<td>Free Spirit</td><td>2017</td>'                 '<td><iframe src="https://open.spotify.com/embed/album/2L6oLL2eWz8DI6JF3cqVab" width="300" height="100" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe></td>'             '</tr>'             '<tr>'                 '<td>Feel We like</td><td>2017</td>'                 '<td><iframe src="https://open.spotify.com/embed/album/7KHzZS6lw9Y9wSxnXMS6sw" width="300" height="100" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe></td>'             '</tr>'             '<tr>'                 '<td>Eastbound</td><td>2017</td>'                 '<td><iframe src="https://open.spotify.com/embed/album/12zdLt8RAuiC23P4qu7eda" width="300" height="100" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe></td>'             '</tr>'             '<tr>'                 '<td>Lined Up</td><td>2017-12-08</td>'                 '<td><iframe src="https://open.spotify.com/embed/album/3x3ilXcSBtMIuKdEBz7vEa" width="300" height="100" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe></td>'             '</tr>'             '<tr>'                 '<td>Parking Lot</td><td>2016</td>'                 '<td><iframe src="https://open.spotify.com/embed/album/7bDkp9qDtWEriKm7bQVmOu" width="300" height="100" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe></td>'             '</tr>'             '<tr>'                 '<td>1Z</td><td>2016</td>'                 '<td><iframe src="https://open.spotify.com/embed/album/3d2OWITI93qH73X9Afq3SC" width="300" height="100" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe></td>'             '</tr>'             '</table>', unsafe_allow_html=True) 
     
     st.write('<br><br>More Info:<a href="https://www.manilagrey.com/" target="_blank">Website</a>, '             '<a href="https://open.spotify.com/artist/7KC9q5wx0bxMD5ABgLCoEd" target="_blank">Spotify</a>,     '             '<a href="https://www.youtube.com/channel/UCUNC9hmB6I7MvY2w2LF5fUQ" target="_blank">Youtube</a>     '             '<a href="https://www.instagram.com/manilagrey/?hl=en" target="_blank">Instagram</a>'             '<a href="https://facebook.com/manilagreymusic" target="_blank">Facebook</a>'
@@ -138,7 +144,9 @@ elif add_selectbox == 'List of Tools':
     st.image(image, caption='', width=300, height=150)
     image = Image.open('logo/matplotlib.png').convert('RGB')
     st.image(image, caption='', width=300, height=150)
-    image = Image.open('logo/numpy.png').convert('RGB')
+    image = Image.open('logo/numpy.png')
+    st.image(image, caption='', width=300, height=150)
+    image = Image.open('logo/wikipedia.png')
     st.image(image, caption='', width=300, height=150)
 
 
@@ -148,7 +156,7 @@ elif add_selectbox == 'List of Tools':
 elif add_selectbox == 'Process Flow':
     st.subheader('Process Flow')
     st.write('-----------------------------')
-    st.markdown("<ul>"                "<li>Data Sourcing</li>"                "<li>Data Cleaning</li>"                "<li>Creation of Market Data Science Questions</li>"                "<li>Exploratory Data Analysis</li>"                "<li>Track Genre Classification</li>"                "<li>Recommendation Engine</li>"                "<li>Deployment</li>"                 "</ul>", unsafe_allow_html=True)
+    st.markdown("<ul>"                "<li>Data Sourcing</li>"                "<li>Data Cleaning</li>"                "<li>Exploratory Data Analysis</li>"                "<li>Feature Importance</li>"                "<li>Track Genre Classification</li>"                "<li>Recommendation Engine</li>"                "<li>Deployment</li>"                "</ul>", unsafe_allow_html=True)
 
 
 # In[ ]:
@@ -174,7 +182,7 @@ elif add_selectbox == 'Data Sourcing':
     st.code("id = The Spotify ID for the artist.", language='python')
     
     
-    st.write('4. <a href="https://developer.spotify.com/documentation/web-api/reference/search/search/" target="_blank"> '             'Get Sample Playlist Details</a>', unsafe_allow_html=True)
+    st.write('4. <a href="https://developer.spotify.com/documentation/web-api/reference/search/search/" target="_blank"> '             'Get Playlists</a>', unsafe_allow_html=True)
     
     st.write("&nbsp;<span style='font-size:14px;'>Parameters:</span>", unsafe_allow_html=True)
     st.code("q = Search query keywords", language='python')
@@ -195,48 +203,20 @@ elif add_selectbox == 'Data Set':
     st.markdown('<b>Data Dimensions:</b> Rows: 197800', unsafe_allow_html=True)
     
     st.write('<b> Top 200 Daily Charts:</b>', unsafe_allow_html=True)
-    st.markdown('Sample Data Set:', unsafe_allow_html=True)
-    dataset_sample = {
-                      'date': ['2018-01-01', '2018-01-01', '2018-01-01', '2018-01-01', '2018-01-01'], 
-                      'position': ['1', '2', '3', '4', '5'],
-                      'track_id': ['0ofbQMrRDsUaVKq2mGLEAb', '0tgVpDi06FyKpA1z0VMD4v', '3hBBKuWJfxlIlnd9QFoC8k', 
-                                   '1mXVgsBdtIVeCLJnSnmtdV', '2ekn2ttSfGqwhhate0LSR0'],
-                      'track_name': ['Havana', 'Perfect', 'What Lovers Do (feat. SZA)', 'Too Good At Goodbyes', 'New Rules'],
-                      'artist': ['Camila Cabello', 'Ed Sheeran', 'Maroon 5', 'Sam Smith', 'Dua Lipa'],
-                      'streams': ['155633', '134756', '130898', '130798', '125472']
-                     }
-    
-    st.table(dataset_sample)
-    
-    
-    st.markdown('Data Description:', unsafe_allow_html=True)
+
     
     data_details = {
         'columns': ['date', 'position', 'track_id', 'track_name', 'artist', 'streams'],
         'Description': ['Current Date of the Chart', 'Place in the Chart', 'Unique Identifier for the Song', 'Song Name', 'Name of the Singer', 'Total Number of Streams'],
-        'Data Types': ['int64', 'object', 'object', 'object', 'object', 'int64']
+        'Data Types': ['int64', 'object', 'object', 'object', 'object', 'int64'],
+        'Sample Data': ['2020-01-01', 1, '1xQ6trAsedVPCdbtDAmk0c', 'Savage Love', 'Jason Derulo', '125472']
     }
         
     st.table(pd.DataFrame(data_details).set_index('columns'))
     
+    st.write('-----------------------------')
     st.write('<b> Track Audio Features:</b>', unsafe_allow_html=True)
-    st.markdown('<b>Sample Data Set:</b>', unsafe_allow_html=True)
-    dataset_sample = {
-                      'duration_ms': ['2018-01-01', '2018-01-01', '2018-01-01', '2018-01-01', '2018-01-01'], 
-                      'key': ['1', '2', '3', '4', '5'],
-                      'mode': ['0ofbQMrRDsUaVKq2mGLEAb', '0tgVpDi06FyKpA1z0VMD4v', '3hBBKuWJfxlIlnd9QFoC8k', 
-                                   '1mXVgsBdtIVeCLJnSnmtdV', '2ekn2ttSfGqwhhate0LSR0'],
-                      'acousticness': ['1', '2', '3', '4', '5'],
-                      'danceability': ['1', '2', '3', '4', '5'],
-                      'energy': ['1', '2', '3', '4', '5'],
-                      'instrumentalness': ['1', '2', '3', '4', '5'],
-                      'liveness': ['1', '2', '3', '4', '5'],
-                      'loudness': ['1', '2', '3', '4', '5'],
-                      'speechiness': ['1', '2', '3', '4', '5'],
-                      'valence': ['1', '2', '3', '4', '5'],
-                      'tempo': ['1', '2', '3', '4', '5'],
-                     }
-    st.table(dataset_sample)
+
     data_details = {
         'columns': ['duration_ms', 'key', 'mode', 'acousticness', 'danceability', 'energy', 'instrumentalness',
                    'liveness', 'loudness', 'speechiness', 'valence', 'tempo'],
@@ -251,12 +231,12 @@ elif add_selectbox == 'Data Set':
                         'A measure from 0.0 to 1.0 describing the musical positiveness conveyed by a track.', 
                         'The overall estimated tempo of a track in beats per minute (BPM). '
                        ],
-#         'Data Types': ['int64', 'object', 'object', 'object', 'object', 'int64']
+        'Data Types': ['2018-01-01', 1, '0ofbQMrRDsUaVKq2mGLEAb', '2', '2', '1', 1, 2, 3, 1, 1, 1]
     }
     
     st.table(pd.DataFrame(data_details).set_index('columns'))
     
-    st.markdown('<b>Data Description:</b>', unsafe_allow_html=True)
+    st.write('-----------------------------')
     st.write('<b> Artist Details:</b>', unsafe_allow_html=True)
     st.markdown('<b>Sample Data Set:</b>', unsafe_allow_html=True)
     dataset_sample = {
@@ -286,6 +266,12 @@ elif add_selectbox == 'Data Cleaning':
 elif add_selectbox == 'Exploratory Data Analysis':
     st.subheader('Exploratory Data Analysis')
     st.write('-----------------------------')
+    
+    option = st.selectbox(
+     'Topics:',
+     ('1. R&B Top 200 Distribution', '2. Manila Grey & R&B Top 200 Distribution'))
+    
+    st.write('You selected:', option)
 
 
 # In[ ]:
@@ -308,35 +294,62 @@ elif add_selectbox == 'Recommender Engine':
     if st.button('Check Results'):        
         
         chart_tracks_df = pickle.load(open("chart_tracks_df.pkl", "rb" ))
-        st.write(user_input)
-#         #chart_tracks_df = chart_tracks_df.sort_values(by = 'track_id').drop_duplicates(subset = ['track_id'], keep = 'first')
         feature_cols = ['danceability', 'energy', 'loudness', 'speechiness', 'acousticness', 'instrumentalness',                    'liveness', 'valence', 'tempo']
 
-        seed_track_data = chart_tracks_df[chart_tracks_df['track_name']=='Buttercup'].iloc[0]
+        seed_track_data = chart_tracks_df[chart_tracks_df['track_name']==user_input].iloc[0]
+        
+        ## cosine_similarity
+        st.write('-----------------------------')
+        st.markdown('<b>Cosine Similarity Result</b>', unsafe_allow_html=True)
+        
+        cosine_data = chart_tracks_df
+        cosine_data['cosine_dist'] = cosine_data.apply(lambda x: cosine_similarity(x[feature_cols].values.reshape(-1, 1),                                                                      seed_track_data[feature_cols].values.reshape(-1, 1))                                                                      .flatten()[0], axis=1)
 
-#         ## euclidean_distances
-        chart_tracks_df['euclidean_dist'] = chart_tracks_df.apply(lambda x: euclidean_distances(x[feature_cols].values.reshape(-1, 1),                                                                      seed_track_data[feature_cols].values.reshape(-1, 1))                                                                      .flatten()[0], axis=1)
-
-        recommendation_df = chart_tracks_df[chart_tracks_df['track_id']!=seed_track_data['track_id']].sort_values('euclidean_dist')[:10]    
+        cosine_recommendation_df = cosine_data[cosine_data['track_id']!=seed_track_data['track_id']][['track_id', 'track_name','artist_name','cosine_dist','predicted_genre']].sort_values('cosine_dist').drop_duplicates()[:10]    
+        
+        cosine_table = '<table>'
+        cosine_table = '<tr><td><b>Track Name</b></td><td><b>Artist Name</b></td><td><b>Cosine Dist</b></td><td><b>Prediction Genre</b></td><td><b>Spotify Song</b></td></tr>'
+        
+        for index, row in cosine_recommendation_df.iterrows():
+            row['cosine_dist'] = round(row['cosine_dist'], 2)
+            cosine_table += '<tr><td>'+row['track_name']+'<td>'+row['artist_name']+            '</td><td>'+str(row['cosine_dist'])+'</td><td>'+str(row['predicted_genre'])+'</td>'
+            cosine_table += '<td><iframe src="https://open.spotify.com/embed/track/'+row['track_id']+'" width="300" height="100" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe></td></tr>'         
+        cosine_table += '</table>'
+        st.write(cosine_table, unsafe_allow_html=True)
+        
+        ## euclidean_distances
+        st.write('-----------------------------')
         st.markdown('<b>Euclidean Distances Result</b>', unsafe_allow_html=True)
-        st.table(recommendation_df[['track_name','artist_name','euclidean_dist','predicted_genre']+feature_cols].set_index('track_name'))
+        euclidean_data = chart_tracks_df
+        euclidean_data['euclidean_dist'] = euclidean_data.apply(lambda x: euclidean_distances(x[feature_cols].values.reshape(-1, 1),                                                                      seed_track_data[feature_cols].values.reshape(-1, 1))                                                                      .flatten()[0], axis=1)
+
+        euclidean_recommendation_df = euclidean_data[euclidean_data['track_id']!=seed_track_data['track_id']][['track_id', 'track_name','artist_name','euclidean_dist','predicted_genre']].sort_values('euclidean_dist')[:10]    
+        
+        euclidean_table = '<table>'
+        euclidean_table = '<tr><td><b>Track Name</b></td><td><b>Artist Name</b></td><td><b>Euclidean Dist</b></td><td><b>Prediction Genre</b></td><td><b>Spotify Song</b></td></tr>'
+        for index, row in euclidean_recommendation_df.iterrows():
+            row['euclidean_dist'] = round(row['euclidean_dist'], 2)
+            euclidean_table += '<tr><td>'+row['track_name']+'<td>'+row['artist_name']+            '</td><td>'+str(row['euclidean_dist'])+'</td><td>'+str(row['predicted_genre'])+'</td>'
+            euclidean_table += '<td><iframe src="https://open.spotify.com/embed/track/'+row['track_id']+'" width="300" height="100" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe></td></tr>'         
+        euclidean_table += '</table>'
+        st.write(euclidean_table, unsafe_allow_html=True)
 
 
         ## manhattan_distances
+        st.write('-----------------------------')
         st.markdown('<b>Manhattan Distances Result</b>', unsafe_allow_html=True)
-        chart_tracks_df['manhattan_dist'] = chart_tracks_df.apply(lambda x: manhattan_distances(x[feature_cols].values.reshape(-1, 1),                                                                      seed_track_data[feature_cols].values.reshape(-1, 1))                                                                      .flatten()[0], axis=1)
-        recommendation_df = chart_tracks_df[chart_tracks_df['track_id']!=seed_track_data['track_id']].sort_values('manhattan_dist')[:10]
-        st.table(recommendation_df[['track_name','artist_name','manhattan_dist','predicted_genre']+feature_cols].set_index('track_name'))
-
-
-        ## cosine_similarity
-        st.markdown('<b>Cosine Similarity Result</b>', unsafe_allow_html=True)
-        chart_tracks_df['cosine_dist'] = chart_tracks_df.apply(lambda x: 1-cosine_similarity(x[feature_cols].values.reshape(1, -1),                                                                      seed_track_data[feature_cols].values.reshape(1, -1))                                                                      .flatten()[0], axis=1)
-
-        recommendation_df = chart_tracks_df[chart_tracks_df['track_id']!=seed_track_data['track_id']].sort_values('cosine_dist')[:10]
-        st.table(recommendation_df[['track_name','artist_name','cosine_dist','predicted_genre']+feature_cols].set_index('track_name'))
-    
-    #st.write(user_input)
+        manhattan_data = chart_tracks_df
+        manhattan_data['manhattan_dist'] = manhattan_data.apply(lambda x: manhattan_distances(x[feature_cols].values.reshape(-1, 1),                                                                      seed_track_data[feature_cols].values.reshape(-1, 1))                                                                      .flatten()[0], axis=1)
+        manhattan_recommendation_df = manhattan_data[manhattan_data['track_id']!=seed_track_data['track_id']][['track_id', 'track_name','artist_name','manhattan_dist','predicted_genre']].sort_values('manhattan_dist')[:10]    
+        manhattan_table = '<table>'
+        manhattan_table = '<tr><td><b>Track Name</b></td><td><b>Artist Name</b></td><td><b>Manhatan Dist</b></td><td><b>Prediction Genre</b></td><td><b>Spotify Song</b></td></tr>'
+        for index, row in manhattan_recommendation_df.iterrows():
+            row['manhattan_dist'] = round(row['manhattan_dist'], 2)
+            manhattan_table += '<tr><td>'+row['track_name']+'<td>'+row['artist_name']+            '</td><td>'+str(row['manhattan_dist'])+'</td><td>'+str(row['predicted_genre'])+'</td>'
+            manhattan_table += '<td><iframe src="https://open.spotify.com/embed/track/'+row['track_id']+'" width="300" height="100" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe></td></tr>'         
+        manhattan_table += '</table>'
+        st.write(manhattan_table, unsafe_allow_html=True)
+        
 
 
 # In[ ]:
@@ -358,4 +371,36 @@ else:
                 "<li>Justine Brian Santoalla </li>"\
                 "<li>Rhey Ann Magcalas</li>"\
                  "</ul>", unsafe_allow_html=True)
+
+
+# In[31]:
+
+
+# import pandas as pd
+# import pickle
+# from sklearn.metrics.pairwise import euclidean_distances, manhattan_distances, cosine_similarity
+
+# feature_cols = ['danceability', 'energy', 'loudness', 'speechiness', 'acousticness', 'instrumentalness',\
+#                     'liveness', 'valence', 'tempo']
+
+# chart_tracks_df = pickle.load(open("chart_tracks_df.pkl", "rb" ))
+# #chart_tracks_df
+# #chart_tracks_df['track_name_artist'] =  chart_tracks_df['artist_name']+"_"+chart_tracks_df['track_name'] 
+# # chart_tracks_df['track_name_artist']
+
+# seed_track_data = chart_tracks_df[chart_tracks_df['track_name']=='Circles'].iloc[0]
+
+
+# chart_tracks_df['cosine_dist'] = chart_tracks_df.apply(lambda x: cosine_similarity(x[feature_cols].values.reshape(-1, 1),\
+#                                                               seed_track_data[feature_cols].values.reshape(-1, 1))\
+#                                                               .flatten()[0], axis=1)
+
+# recommendation_df = chart_tracks_df[chart_tracks_df['track_id']!=seed_track_data['track_id']][['track_id', 'track_name','artist_name','cosine_dist','predicted_genre']].sort_values('cosine_dist').drop_duplicates()[:10]    
+
+# recommendation_df
+# recommendation_df['track_name_artist'] = recommendation_df['artist_name']+"_"+recommendation_df['track_name'] 
+# recommendation_df
+
+# merged_inner = pd.merge(left=chart_tracks_df, right=recommendation_df, left_on='track_name_artist', right_on='track_name_artist')
+# merged_inner
 
