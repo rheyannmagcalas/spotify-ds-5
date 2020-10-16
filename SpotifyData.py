@@ -7,6 +7,7 @@
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
+import pickle
 import seaborn as sns
 import streamlit as st
 
@@ -189,7 +190,7 @@ elif add_selectbox == 'Data Set':
     st.subheader('Data Set')
     st.write('-----------------------------')
     
-    st.markdown('<b>Data Dimensions:</b> Rows: 197800 Columns: 27', unsafe_allow_html=True)
+    st.markdown('<b>Data Dimensions:</b> Rows: 197800', unsafe_allow_html=True)
     
     st.write('<b> Top 200 Daily Charts:</b>', unsafe_allow_html=True)
     st.markdown('Sample Data Set:', unsafe_allow_html=True)
@@ -300,7 +301,40 @@ elif add_selectbox == 'Recommender Engine':
     st.subheader('Recommender Engine')
     st.write('-----------------------------')
     user_input = st.text_input("Song Title")
-    st.write(user_input)
+    
+    
+    if st.button('Check Results'):        
+        from sklearn.metrics.pairwise import euclidean_distances, manhattan_distances, cosine_similarity
+        chart_tracks_df = pickle.load(open("chart_tracks_df.p", "rb" ))
+
+        #chart_tracks_df = chart_tracks_df.sort_values(by = 'track_id').drop_duplicates(subset = ['track_id'], keep = 'first')
+        feature_cols = ['danceability', 'energy', 'loudness', 'speechiness', 'acousticness', 'instrumentalness',                    'liveness', 'valence', 'tempo']
+
+        seed_track_data = chart_tracks_df[chart_tracks_df['track_name']=='Buttercup'].iloc[0]
+
+        ## euclidean_distances
+        chart_tracks_df['euclidean_dist'] = chart_tracks_df.apply(lambda x: euclidean_distances(x[feature_cols].values.reshape(-1, 1),                                                                      seed_track_data[feature_cols].values.reshape(-1, 1))                                                                      .flatten()[0], axis=1)
+
+        recommendation_df = chart_tracks_df[chart_tracks_df['track_id']!=seed_track_data['track_id']].sort_values('euclidean_dist')[:10]    
+        st.markdown('<b>Euclidean Distances Result</b>', unsafe_allow_html=True)
+        st.table(recommendation_df[['track_name','artist_name','euclidean_dist','predicted_genre']+feature_cols].set_index('track_name'))
+
+
+        ## manhattan_distances
+        st.markdown('<b>Manhattan Distances Result</b>', unsafe_allow_html=True)
+        chart_tracks_df['manhattan_dist'] = chart_tracks_df.apply(lambda x: manhattan_distances(x[feature_cols].values.reshape(-1, 1),                                                                      seed_track_data[feature_cols].values.reshape(-1, 1))                                                                      .flatten()[0], axis=1)
+        recommendation_df = chart_tracks_df[chart_tracks_df['track_id']!=seed_track_data['track_id']].sort_values('manhattan_dist')[:10]
+        st.table(recommendation_df[['track_name','artist_name','manhattan_dist','predicted_genre']+feature_cols].set_index('track_name'))
+
+
+        ## cosine_similarity
+        st.markdown('<b>Cosine Similarity Result</b>', unsafe_allow_html=True)
+        chart_tracks_df['cosine_dist'] = chart_tracks_df.apply(lambda x: 1-cosine_similarity(x[feature_cols].values.reshape(1, -1),                                                                      seed_track_data[feature_cols].values.reshape(1, -1))                                                                      .flatten()[0], axis=1)
+
+        recommendation_df = chart_tracks_df[chart_tracks_df['track_id']!=seed_track_data['track_id']].sort_values('cosine_dist')[:10]
+        st.table(recommendation_df[['track_name','artist_name','cosine_dist','predicted_genre']+feature_cols].set_index('track_name'))
+    
+    #st.write(user_input)
 
 
 # In[ ]:
