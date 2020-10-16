@@ -303,9 +303,9 @@ elif add_selectbox == 'Recommender Engine':
     user_input = st.text_input("Song Title")
     
     
-#     if st.button('Check Results'):        
-#         from sklearn.metrics.pairwise import euclidean_distances, manhattan_distances, cosine_similarity
-#         chart_tracks_df = pickle.load(open("chart_tracks_df.p", "rb" ))
+    if st.button('Check Results'):        
+        from sklearn.metrics.pairwise import euclidean_distances, manhattan_distances, cosine_similarity
+        chart_tracks_df = pickle.load(open("chart_tracks_df.p", "rb" ))
 
 #         #chart_tracks_df = chart_tracks_df.sort_values(by = 'track_id').drop_duplicates(subset = ['track_id'], keep = 'first')
 #         feature_cols = ['danceability', 'energy', 'loudness', 'speechiness', 'acousticness', 'instrumentalness',\
