@@ -314,7 +314,7 @@ elif add_selectbox == 'Recommender Engine':
 
         seed_track_data = chart_tracks_df[chart_tracks_df['track_name']=='Buttercup'].iloc[0]
 
-        ## euclidean_distances
+#         ## euclidean_distances
 #         chart_tracks_df['euclidean_dist'] = chart_tracks_df.apply(lambda x: euclidean_distances(x[feature_cols].values.reshape(-1, 1),\
 #                                                                       seed_track_data[feature_cols].values.reshape(-1, 1))\
 #                                                                       .flatten()[0], axis=1)
@@ -333,14 +333,12 @@ elif add_selectbox == 'Recommender Engine':
 #         st.table(recommendation_df[['track_name','artist_name','manhattan_dist','predicted_genre']+feature_cols].set_index('track_name'))
 
 
-#         ## cosine_similarity
-#         st.markdown('<b>Cosine Similarity Result</b>', unsafe_allow_html=True)
-#         chart_tracks_df['cosine_dist'] = chart_tracks_df.apply(lambda x: 1-cosine_similarity(x[feature_cols].values.reshape(1, -1),\
-#                                                                       seed_track_data[feature_cols].values.reshape(1, -1))\
-#                                                                       .flatten()[0], axis=1)
+        ## cosine_similarity
+        st.markdown('<b>Cosine Similarity Result</b>', unsafe_allow_html=True)
+        chart_tracks_df['cosine_dist'] = chart_tracks_df.apply(lambda x: 1-cosine_similarity(x[feature_cols].values.reshape(1, -1),                                                                      seed_track_data[feature_cols].values.reshape(1, -1))                                                                      .flatten()[0], axis=1)
 
-#         recommendation_df = chart_tracks_df[chart_tracks_df['track_id']!=seed_track_data['track_id']].sort_values('cosine_dist')[:10]
-#         st.table(recommendation_df[['track_name','artist_name','cosine_dist','predicted_genre']+feature_cols].set_index('track_name'))
+        recommendation_df = chart_tracks_df[chart_tracks_df['track_id']!=seed_track_data['track_id']].sort_values('cosine_dist')[:10]
+        st.table(recommendation_df[['track_name','artist_name','cosine_dist','predicted_genre']+feature_cols].set_index('track_name'))
     
     #st.write(user_input)
 
