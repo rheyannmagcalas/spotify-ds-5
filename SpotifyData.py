@@ -23,6 +23,8 @@ from IPython import get_ipython
 from PIL import Image
 from streamlit import caching
 
+from sklearn.metrics.pairwise import euclidean_distances, manhattan_distances, cosine_similarity
+
 
 # ### Setting Title of the Web
 
@@ -304,7 +306,7 @@ elif add_selectbox == 'Recommender Engine':
     
     
     if st.button('Check Results'):        
-        #from sklearn.metrics.pairwise import euclidean_distances, manhattan_distances, cosine_similarity
+        
         chart_tracks_df = pickle.load(open("chart_tracks_df.pkl", "rb" ))
         st.write(user_input)
 #         #chart_tracks_df = chart_tracks_df.sort_values(by = 'track_id').drop_duplicates(subset = ['track_id'], keep = 'first')
