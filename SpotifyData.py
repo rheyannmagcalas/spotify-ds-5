@@ -1,11 +1,12 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[25]:
+# In[1]:
 
 
 import matplotlib.pyplot as plt
 import numpy as np
+import os
 import pandas as pd
 import pickle
 import seaborn as sns
@@ -48,7 +49,7 @@ add_selectbox = st.sidebar.radio(
     "",
     ("Introduction", "Client", "List of Tools", "Process Flow", "Data Sourcing", "Data Set", 
      "Data Cleaning", "Exploratory Data Analysis", "Song Genre Classification", "Recommender Engine", 
-     "Possible Business Strategies", "Contributors")
+     "Possible Business Strategies", "Contributors", "Spotify Settings")
 )
 
 
@@ -271,7 +272,42 @@ elif add_selectbox == 'Exploratory Data Analysis':
      'Topics:',
      ('1. R&B Top 200 Distribution', '2. Manila Grey & R&B Top 200 Distribution'))
     
-    st.write('You selected:', option)
+    if option == '1. R&B Top 200 Distribution':
+        
+        st.markdown('<span style="margin-left:5%">1. R&B Data </span>', unsafe_allow_html=True)
+        st.markdown('<span style="margin-left:5%">2. Merge Top 200 and R&B Data </span>', unsafe_allow_html=True)
+        st.markdown('<span style="margin-left:5%">3. Check How Many R&B Songs in Top 200 </span>', unsafe_allow_html=True)
+        st.markdown('<span style="margin-left:8%">a. <b>Count:</b> 37/2292 </span>', unsafe_allow_html=True)
+        st.markdown('<span style="margin-left:8%">b. <b>Percentage:</b> 1.61% </span>', unsafe_allow_html=True)
+        
+        st.markdown('<span style="margin-left:5%">Conclusion: R&B is a tough market</span>', unsafe_allow_html=True)
+
+    else:
+        with open('top_200_rnb.pkl', 'rb') as handle:
+            top_200 = pickle.load(handle)
+        df_Non200 = top_200[top_200['Top200'] ==False]
+        df_200 = top_200[top_200['Top200'] ==True]
+
+        with open('seed_tracks.pkl', 'rb') as handle:
+            manila_grey_songs = pickle.load(handle)
+         
+        for col in ['danceability', 'energy','loudness', 'speechiness', 'acousticness', 'instrumentalness','liveness', 'valence', 'tempo']:
+            fig = plt.figure()
+            ax= fig.add_subplot(111)
+
+            sns.distplot(df_Non200[col], ax=ax, label= 'R&B')
+            sns.distplot(manila_grey_songs[col], ax=ax, label= 'Manila Grey')
+            plt.ylabel('Frequency')
+            plt.legend(frameon=False)
+            plt.show()
+            
+            st.pyplot(fig)
+        
+        st.write('Top 200')
+        st.table(df_200[['danceability', 'energy', 'key',       'loudness', 'mode', 'speechiness', 'acousticness', 'instrumentalness',       'liveness', 'valence', 'tempo']].describe())
+        
+        st.write('R&B Top 200')
+        st.table(df_Non200[['danceability', 'energy', 'key',        'loudness', 'mode', 'speechiness', 'acousticness', 'instrumentalness',        'liveness', 'valence', 'tempo']].describe())
 
 
 # In[ ]:
@@ -280,6 +316,9 @@ elif add_selectbox == 'Exploratory Data Analysis':
 elif add_selectbox == 'Song Genre Classification':
     st.subheader('Song Genre Classification')
     st.write('-----------------------------')
+    
+    st.write('Logistic Regression')
+    
 
 
 # In[ ]:
@@ -299,14 +338,14 @@ elif add_selectbox == 'Recommender Engine':
         seed_track_data = chart_tracks_df[chart_tracks_df['track_name']==user_input].iloc[0]
         
         ## cosine_similarity
-        st.write('-----------------------------')
-        st.markdown('<b>Cosine Similarity Result</b>', unsafe_allow_html=True)
-        
         cosine_data = chart_tracks_df
         cosine_data['cosine_dist'] = cosine_data.apply(lambda x: cosine_similarity(x[feature_cols].values.reshape(-1, 1),                                                                      seed_track_data[feature_cols].values.reshape(-1, 1))                                                                      .flatten()[0], axis=1)
 
         cosine_recommendation_df = cosine_data[cosine_data['track_id']!=seed_track_data['track_id']][['track_id', 'track_name','artist_name','cosine_dist','predicted_genre']].sort_values('cosine_dist').drop_duplicates()[:10]    
         
+        st.write('-----------------------------')
+        st.markdown('<b>Cosine Similarity Result</b>', unsafe_allow_html=True)
+            
         cosine_table = '<table>'
         cosine_table = '<tr><td><b>Track Name</b></td><td><b>Artist Name</b></td><td><b>Cosine Dist</b></td><td><b>Prediction Genre</b></td><td><b>Spotify Song</b></td></tr>'
         
@@ -315,6 +354,33 @@ elif add_selectbox == 'Recommender Engine':
             cosine_table += '<tr><td>'+row['track_name']+'<td>'+row['artist_name']+            '</td><td>'+str(row['cosine_dist'])+'</td><td>'+str(row['predicted_genre'])+'</td>'
             cosine_table += '<td><iframe src="https://open.spotify.com/embed/track/'+row['track_id']+'" width="300" height="100" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe></td></tr>'         
         cosine_table += '</table>'
+        
+        import spotipy
+        from spotipy.oauth2 import SpotifyClientCredentials
+        
+        import keyring
+        import time
+
+        client_id=os.environ['client_id']
+        client_secret=os.environ['client_secret']
+
+        username = os.environ['username']
+        scope_playlist = 'playlist-modify-public'
+        scope_user = 'user-library-modify'
+
+        #Credentials to access the Spotify Music Data
+        manager = SpotifyClientCredentials(client_id,client_secret)
+        sp = spotipy.Spotify(client_credentials_manager=manager)
+        
+        sp_user = spotipy.Spotify(auth=os.environ['user_token'])
+        sp_playlist = spotipy.Spotify(auth=os.environ['playlist_token'])
+        
+        new_playlist_name = "Eskwelabs: Cosine Similarity Recommendations for seed track: {}".format(user_input)    
+        new_playlist = sp_playlist.user_playlist_create(username, name=new_playlist_name)   
+
+        sp_playlist.user_playlist_add_tracks(username, new_playlist['id'], list(cosine_recommendation_df['track_id']))
+        
+        st.markdown('<a href ="'+new_playlist['external_urls']['spotify']+'" target="_blank">Listen to Cosine Suggested Playlist</a>', unsafe_allow_html=True)
         st.write(cosine_table, unsafe_allow_html=True)
         
         ## euclidean_distances
@@ -363,7 +429,7 @@ elif add_selectbox == 'Possible Business Strategies':
 # In[ ]:
 
 
-else:
+elif add_selectbox == 'Contributors':
     st.subheader('Contributors')
     st.write('-----------------------------')
     st.markdown("<ul>"                "<li>Danilo Jr. Gubaton</li>"                "<li>Fili Emerson Chua</li>"
@@ -373,34 +439,27 @@ else:
                  "</ul>", unsafe_allow_html=True)
 
 
-# In[31]:
+# In[ ]:
 
 
-# import pandas as pd
-# import pickle
-# from sklearn.metrics.pairwise import euclidean_distances, manhattan_distances, cosine_similarity
-
-# feature_cols = ['danceability', 'energy', 'loudness', 'speechiness', 'acousticness', 'instrumentalness',\
-#                     'liveness', 'valence', 'tempo']
-
-# chart_tracks_df = pickle.load(open("chart_tracks_df.pkl", "rb" ))
-# #chart_tracks_df
-# #chart_tracks_df['track_name_artist'] =  chart_tracks_df['artist_name']+"_"+chart_tracks_df['track_name'] 
-# # chart_tracks_df['track_name_artist']
-
-# seed_track_data = chart_tracks_df[chart_tracks_df['track_name']=='Circles'].iloc[0]
-
-
-# chart_tracks_df['cosine_dist'] = chart_tracks_df.apply(lambda x: cosine_similarity(x[feature_cols].values.reshape(-1, 1),\
-#                                                               seed_track_data[feature_cols].values.reshape(-1, 1))\
-#                                                               .flatten()[0], axis=1)
-
-# recommendation_df = chart_tracks_df[chart_tracks_df['track_id']!=seed_track_data['track_id']][['track_id', 'track_name','artist_name','cosine_dist','predicted_genre']].sort_values('cosine_dist').drop_duplicates()[:10]    
-
-# recommendation_df
-# recommendation_df['track_name_artist'] = recommendation_df['artist_name']+"_"+recommendation_df['track_name'] 
-# recommendation_df
-
-# merged_inner = pd.merge(left=chart_tracks_df, right=recommendation_df, left_on='track_name_artist', right_on='track_name_artist')
-# merged_inner
+else:
+    username = st.text_input('Username')
+    if username != '':
+        os.environ['username'] = username
+    
+    client_id = st.text_input('Client Id')
+    if client_id != '':
+        os.environ['client_id'] = client_id
+    
+    client_secret = st.text_input('Client Secret')
+    if client_secret != '':
+        os.environ['client_secret'] = client_secret
+    
+    user_token = st.text_input('User Token')
+    if user_token != '':
+        os.environ['user_token'] = user_token
+        
+    playlist_token = st.text_input('Playlist Token')
+    if playlist_token != '':
+        os.environ['playlist_token'] = playlist_token
 
