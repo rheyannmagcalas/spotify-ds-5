@@ -157,7 +157,7 @@ elif add_selectbox == 'List of Tools':
 elif add_selectbox == 'Process Flow':
     st.subheader('Process Flow')
     st.write('-----------------------------')
-    st.markdown("<ul>"                "<li>Data Sourcing</li>"                "<li>Data Cleaning</li>"                "<li>Exploratory Data Analysis</li>"                "<li>Feature Importance</li>"                "<li>Track Genre Classification</li>"                "<li>Recommendation Engine</li>"                "<li>Deployment</li>"                "</ul>", unsafe_allow_html=True)
+    st.markdown("<ul>"                "<li>Data Sourcing</li>"                "<li>Data Cleaning</li>"                "<li>Exploratory Data Analysis</li>"                "<li>Track Genre Classification</li>"                "<li>Feature Importance</li>"                "<li>Recommendation Engine</li>"                "<li>Deployment</li>"                "</ul>", unsafe_allow_html=True)
 
 
 # In[ ]:
@@ -191,6 +191,8 @@ elif add_selectbox == 'Data Sourcing':
     st.code("market = An ISO 3166-1 alpha-2 country code", language='python')
     
     st.write('5. <a href="https://pypi.org/project/wikipedia/" target="_blank"> '             'Checking if an artist is a Filipino</a>', unsafe_allow_html=True)
+    
+    st.write('6. Get Manila Grey Songs and Audio Features', unsafe_allow_html=True)
     
 
 
@@ -239,7 +241,6 @@ elif add_selectbox == 'Data Set':
     
     st.write('-----------------------------')
     st.write('<b> Artist Details:</b>', unsafe_allow_html=True)
-    st.markdown('<b>Sample Data Set:</b>', unsafe_allow_html=True)
     dataset_sample = {
                       'artist_id': ['2018-01-01', '2018-01-01', '2018-01-01', '2018-01-01', '2018-01-01'], 
                       'artist_name': ['1', '2', '3', '4', '5'],
@@ -250,7 +251,6 @@ elif add_selectbox == 'Data Set':
     
     st.table(dataset_sample)
     
-    st.markdown('<b>Data Description:</b>', unsafe_allow_html=True)
 
 
 # In[ ]:
@@ -259,20 +259,117 @@ elif add_selectbox == 'Data Set':
 elif add_selectbox == 'Data Cleaning':
     st.subheader('Data Cleaning')
     st.write('-----------------------------')
+    
+    st.write('1. Merge Top 200 Tracks, Audio Features and Artist Details')
+    st.write('2. Drop Duplicated Track IDs')
+    st.write('3. Merge RNB Tracks to Top 200 Tracks')
 
 
 # In[ ]:
 
 
 elif add_selectbox == 'Exploratory Data Analysis':
+    caching.clear_cache()
     st.subheader('Exploratory Data Analysis')
     st.write('-----------------------------')
     
     option = st.selectbox(
      'Topics:',
-     ('1. R&B Top 200 Distribution', '2. Manila Grey & R&B Top 200 Distribution'))
+     ('1. Top 200 Charts', '2. R&B Top 200 Distribution', '3. Manila Grey & R&B Top 200 Distribution', 
+     '4. Get Similar Artists', '5. Feature Importance', '6. Correlation Matrix'))
     
-    if option == '1. R&B Top 200 Distribution':
+    if option == '1. Top 200 Charts':
+        st.write('<table><tr><td>Unique Artists</td><td>Unique Track Name</td><td>Unique Track ID</td></tr>'                 '<tr><td>605</td><td>1826</td><td>2292</td></tr></table>', unsafe_allow_html=True)
+
+        st.write('-----------------------------')
+        st.write('Top 200 Overall')
+        source1 = ColumnDataSource(data=dict(column_values=['Taylor Swift', 'December Avenue', 'Lauv', 'Moira Dela Torre', 'LANY',
+       'Ed Sheeran', 'Ben&Ben', 'BTS', 'Sam Smith', 'This Band'], 
+                                         column_null_count=[1336, 1242, 1231,  957,  916,  891,  763,  713,  654,  621], 
+                                         color=['#35193e', '#35193e', '#701f57','#701f57', '#ad1759','#ad1759', '#e13342', 
+                                                '#f37651','#f37651', '#f6b48f', '#f6b48f']))
+    
+        xgb_feature_importance= figure(x_range=['Taylor Swift', 'December Avenue', 'Lauv', 'Moira Dela Torre', 'LANY',
+       'Ed Sheeran', 'Ben&Ben', 'BTS', 'Sam Smith', 'This Band'], plot_height=600, title='Top 20 Most Occuring Artists')
+
+        xgb_feature_importance.vbar(x='column_values', top='column_null_count', width=0.5, color='color', 
+                       legend_field='column_values', source=source1)
+
+        xgb_feature_importance.xaxis.axis_label = 'Artists'
+        xgb_feature_importance.yaxis.axis_label = 'Total Streams'
+        xgb_feature_importance.xaxis.major_label_orientation = 1.2
+        xgb_feature_importance.legend.visible = False
+        st.bokeh_chart(xgb_feature_importance)
+        
+        
+        source1 = ColumnDataSource(data=dict(column_values=['Kathang Isip',"Kung 'Di Rin Lang Ikaw",'Sana',
+                                                            'Maybe The Night','Sa Ngalan Ng Pag-Ibig','Mundo',
+                                                            'Buwan', 'Pagtingin','Malibu Nights','IDGAF'], column_null_count=[117417737, 111660025, 102183621,  98601014,  87436861,  85182154, 75693387,  71359213,  65806253,  64416473], 
+                                             color=['#35193e', '#35193e', '#701f57','#701f57', '#ad1759','#ad1759', '#e13342', 
+                                                '#f37651','#f37651', '#f6b48f', '#f6b48f']))
+    
+        xgb_feature_importance= figure(x_range=['Kathang Isip',"Kung 'Di Rin Lang Ikaw",'Sana',
+                                                            'Maybe The Night','Sa Ngalan Ng Pag-Ibig','Mundo',
+                                                            'Buwan', 'Pagtingin','Malibu Nights','IDGAF'], 
+                                       plot_height=600, title='Top 10 Songs')
+
+        xgb_feature_importance.vbar(x='column_values', top='column_null_count', width=0.5, color='color', 
+                       legend_field='column_values', source=source1)
+
+        xgb_feature_importance.xaxis.axis_label = 'Tracks'
+        xgb_feature_importance.yaxis.axis_label = 'Total Streams'
+        xgb_feature_importance.xaxis.major_label_orientation = 1.2
+        xgb_feature_importance.legend.visible = False
+        st.bokeh_chart(xgb_feature_importance)
+        
+        st.write('Filipino Tracks in Top 200')
+        source1 = ColumnDataSource(data=dict(column_values=['Maybe The Night','Mundo','Sana','Buwan','Kahit Ayaw Mo Na',
+                                                            'Zebbiana','Imahe','Make It With You','Catriona','Hayaan Mo Sila',
+                                                            'Sa Susunod na Habang Buhay','Teka Lang'], 
+                                         column_null_count=[963, 946, 787, 719, 714, 411, 278, 277, 277, 174], 
+                                         color=['#35193e', '#35193e', '#701f57','#701f57', '#ad1759','#ad1759', '#e13342', 
+                                                '#f37651','#f37651', '#f6b48f', '#f6b48f']))
+    
+        filipino_tracks= figure(x_range=['Maybe The Night','Mundo','Sana','Buwan','Kahit Ayaw Mo Na',
+                                                            'Zebbiana','Imahe','Make It With You','Catriona','Hayaan Mo Sila',
+                                                            'Sa Susunod na Habang Buhay','Teka Lang'], plot_height=600, 
+                                title='Top Filipino Tracks in Top 200')
+
+        filipino_tracks.vbar(x='column_values', top='column_null_count', width=0.5, color='color', 
+                       legend_field='column_values', source=source1)
+
+        filipino_tracks.xaxis.axis_label = 'Track Names'
+        filipino_tracks.yaxis.axis_label = 'Total Streams'
+        filipino_tracks.xaxis.major_label_orientation = 1.2
+        filipino_tracks.legend.visible = False
+        st.bokeh_chart(filipino_tracks)
+        
+        
+        source1 = ColumnDataSource(data=dict(column_values=['Ben&Ben','Moira Dela Torre', 'This Band','Matthaios',
+                                                            'Ex Battalion','The Juans','Skusta Clee','Shanti Dope',
+                                                            'Sarah Geronimo','Magnus Haven','Darren Espanto'], 
+                                         column_null_count=[8, 5, 3, 2, 2, 1, 1, 1, 1, 1,], 
+                                         color=['#35193e', '#35193e', '#701f57','#701f57', '#ad1759','#ad1759', '#e13342', 
+                                                '#f37651','#f37651', '#f6b48f', '#f6b48f']))
+    
+        filipino_artist= figure(x_range=['Ben&Ben','Moira Dela Torre', 'This Band','Matthaios',
+                                                            'Ex Battalion','The Juans','Skusta Clee','Shanti Dope',
+                                                            'Sarah Geronimo','Magnus Haven','Darren Espanto'], plot_height=600, 
+                                title='Top Filipino Artist in Top 200')
+
+        filipino_artist.vbar(x='column_values', top='column_null_count', width=0.5, color='color', 
+                       legend_field='column_values', source=source1)
+
+        filipino_artist.xaxis.axis_label = 'Track Names'
+        filipino_artist.yaxis.axis_label = 'Total Streams'
+        filipino_artist.xaxis.major_label_orientation = 1.2
+        filipino_artist.legend.visible = False
+        st.bokeh_chart(filipino_artist)
+        
+        
+    
+        
+    elif option == '2. R&B Top 200 Distribution':
         
         st.markdown('<span style="margin-left:5%">1. R&B Data </span>', unsafe_allow_html=True)
         st.markdown('<span style="margin-left:5%">2. Merge Top 200 and R&B Data </span>', unsafe_allow_html=True)
@@ -282,7 +379,7 @@ elif add_selectbox == 'Exploratory Data Analysis':
         
         st.markdown('<span style="margin-left:5%">Conclusion: R&B is a tough market</span>', unsafe_allow_html=True)
 
-    else:
+    elif option == '3. Manila Grey & R&B Top 200 Distribution':
         with open('top_200_rnb.pkl', 'rb') as handle:
             top_200 = pickle.load(handle)
         df_Non200 = top_200[top_200['Top200'] ==False]
@@ -308,6 +405,64 @@ elif add_selectbox == 'Exploratory Data Analysis':
         
         st.write('R&B Top 200')
         st.table(df_Non200[['danceability', 'energy', 'key',        'loudness', 'mode', 'speechiness', 'acousticness', 'instrumentalness',        'liveness', 'valence', 'tempo']].describe())
+    elif option == '4. Get Similar Artists':
+        st.write('1. Kiyo')
+        image = Image.open('logo/kiyo.jpg')
+        st.image(image, caption='', use_column_width=True)
+        st.write('Popularity: 59 Followers: 127.8k')
+        st.write('2. Flow G')
+        image = Image.open('logo/flowG.jpg')
+        st.image(image, caption='', use_column_width=True)
+        st.write('Popularity: 67 Followers: 198.9k')
+        st.write('3. XXXTENTACION')
+        image = Image.open('logo/XXXTENTACION.jpg')
+        st.image(image, caption='', use_column_width=True)
+        st.write('Popularity: 93 Followers: 22.4 millions')
+    elif option == '5. Feature Importance':
+        caching.clear_cache()
+        st.write('Feature Importance Result from XBoost')
+        source1 = ColumnDataSource(data=dict(column_values=['danceability', 'energy', 'loudness', 'speechiness', 'acousticness', 'instrumentalness',                'liveness', 'valence', 'tempo',  'total_followers', 'artist_popularity'], 
+                                         column_null_count=[0.08746213, 0.08943411, 0.09411488, 0.08207512, 0.08589353, 
+                                                            0.09203401, 0.08654683, 0.09182145, 0.08443085, 0.10381381, 
+                                                            0.10237331], 
+                                         color=['#35193e', '#35193e', '#701f57','#701f57', '#ad1759','#ad1759', '#e13342', 
+                                                '#f37651','#f37651', '#f6b48f', '#f6b48f']))
+    
+        xgb_feature_importance= figure(x_range=['danceability', 'energy', 'loudness', 'speechiness', 'acousticness', 'instrumentalness',                'liveness', 'valence', 'tempo',  'total_followers', 'artist_popularity'], plot_height=600, title='XGBoost Feature Importance')
+
+        xgb_feature_importance.vbar(x='column_values', top='column_null_count', width=0.5, color='color', 
+                       legend_field='column_values', source=source1)
+
+        xgb_feature_importance.xaxis.axis_label = 'Features'
+        xgb_feature_importance.yaxis.axis_label = 'Feature Importance'
+        xgb_feature_importance.xaxis.major_label_orientation = 1.2
+        xgb_feature_importance.legend.visible = False
+        st.bokeh_chart(xgb_feature_importance)
+        
+        st.write('Feature Importance Result from Linear Regression')
+        source1 = ColumnDataSource(data=dict(column_values=['danceability', 'energy', 'loudness', 'speechiness', 'acousticness', 'instrumentalness',                'liveness', 'valence', 'tempo',  'total_followers', 'artist_popularity'], 
+                                         column_null_count=[-2.51443890e+01,  1.40064823e+01,  1.58786011e-01,  3.46243226e+01,
+        2.57775322e+00,  1.36753325e+01,  2.68380761e+01,  7.74534944e+00,
+       -8.33828807e-02, -2.93859330e-07, -6.45546749e-01], 
+                                         color=['#35193e', '#35193e', '#701f57','#701f57', '#ad1759','#ad1759', '#e13342', 
+                                                '#f37651','#f37651', '#f6b48f', '#f6b48f']))
+    
+        linear_feature_importance= figure(x_range=['danceability', 'energy', 'loudness', 'speechiness', 'acousticness', 'instrumentalness',                'liveness', 'valence', 'tempo',  'total_followers', 'artist_popularity'], plot_height=600, title='Linear Regression Feature Importance')
+
+        linear_feature_importance.vbar(x='column_values', top='column_null_count', width=0.5, color='color', 
+                       legend_field='column_values', source=source1)
+
+        linear_feature_importance.xaxis.axis_label = 'Features'
+        linear_feature_importance.yaxis.axis_label = 'Feature Importance'
+        linear_feature_importance.xaxis.major_label_orientation = 1.2
+        linear_feature_importance.legend.visible = False
+        st.bokeh_chart(linear_feature_importance)
+    else:
+        st.set_option('deprecation.showPyplotGlobalUse', False)
+        correlation_data = pd.read_pickle("correlation.pkl")        
+        plt.figure(figsize=(15, 15))
+        sns.heatmap(correlation_data, annot=True)  
+        st.pyplot()
 
 
 # In[ ]:
@@ -317,8 +472,35 @@ elif add_selectbox == 'Song Genre Classification':
     st.subheader('Song Genre Classification')
     st.write('-----------------------------')
     
-    st.write('Logistic Regression')
+    st.write('<b>Feature Set</b>: <ul><li>danceability</li><li>energy</li><li>loudness</li><li>speechiness</li>'             '<li>acousticness</li><li>instrumentalness</li><li>liveness</li><li>valence</li><li>tempo</li></ul>'
+             , unsafe_allow_html=True)
     
+    st.write('-----------------------------')
+    st.write('<b>Logistic Regression</b>', unsafe_allow_html=True)
+    st.write('Accuracy Score: 67%')
+    st.write('Recall Score: 36%')
+    st.write('F1 Score: 32%')
+    
+    source1 = ColumnDataSource(data=dict(column_values=['danceability', 'energy', 'loudness', 'speechiness', 'acousticness', 'instrumentalness',                'liveness', 'valence', 'tempo',  'total_followers', 'artist_popularity'], 
+                                         column_null_count=[-0.03169309, -0.52183742,  0.60472622,  0.1211619 , -1.27710276,
+        -0.5747919 ,  0.47144994, -1.19457978,  1.51638223], 
+                                         color=['#35193e', '#35193e', '#701f57','#701f57', '#ad1759','#ad1759', '#e13342', 
+                                                '#f37651','#f37651', '#f6b48f', '#f6b48f']))
+    
+    logistic_feature_importance= figure(x_range=['danceability', 'energy', 'loudness', 'speechiness', 'acousticness', 'instrumentalness',            'liveness', 'valence', 'tempo',  'total_followers', 'artist_popularity'], plot_height=600, title='Linear Regression Feature Importance')
+
+    logistic_feature_importance.vbar(x='column_values', top='column_null_count', width=0.5, color='color', 
+                   legend_field='column_values', source=source1)
+
+    logistic_feature_importance.xaxis.axis_label = 'Features'
+    logistic_feature_importance.yaxis.axis_label = 'Feature Importance'
+    logistic_feature_importance.xaxis.major_label_orientation = 1.2
+    logistic_feature_importance.legend.visible = False
+    st.bokeh_chart(logistic_feature_importance)
+        
+    st.write('-----------------------------')
+    st.write('<b>KNN Neigbors</b>', unsafe_allow_html=True)
+    st.write('Accuracy Score: 76%')
 
 
 # In[ ]:
@@ -422,8 +604,17 @@ elif add_selectbox == 'Recommender Engine':
 
 
 elif add_selectbox == 'Possible Business Strategies':
-    st.subheader('Possible Business Strategies')
+    st.subheader('Recommendations')
     st.write('-----------------------------')
+    
+    st.write('1. COMPOSE Songs with high tempo, low acousticness, AND low VALENCE')
+    st.write('2. Collaborate with Local Arists')
+    
+    st.subheader('Improvements')
+    st.write('Incorporate other sources of data such as social media activity')
+    st.write('Look into the best local artists to collaborate with')
+    st.write('Try other machine learning algorithms')
+    st.write('Analyze song lyrics if we want to focus on audio features')
 
 
 # In[ ]:
