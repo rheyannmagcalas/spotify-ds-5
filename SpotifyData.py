@@ -47,7 +47,7 @@ st.sidebar.markdown("<h1 style='text-align: center;margin-bottom:50px'>DS Cohort
 
 add_selectbox = st.sidebar.radio(
     "",
-    ("Introduction", "Client", "List of Tools", "Process Flow", "Data Sourcing", "Data Set", 
+    ("Introduction", "Client Profile", "Objective", "List of Tools", "Process Flow", "Data Sourcing", "Data Set", 
      "Data Cleaning", "Exploratory Data Analysis", "Song Genre Classification", "Recommender Engine", 
      "Possible Business Strategies", "Contributors", "Spotify Settings")
 )
@@ -73,8 +73,8 @@ if add_selectbox == 'Introduction':
 # In[ ]:
 
 
-elif add_selectbox == 'Client':
-    st.subheader('Client')
+elif add_selectbox == 'Client Profile':
+    st.subheader('Client Profile')
     st.write('-----------------------------')
     image = Image.open('logo/client.png').convert('RGB')
     st.image(image, caption='', width=800, height=200)
@@ -115,6 +115,20 @@ elif add_selectbox == 'Client':
     
     st.write('<br><br>More Info:<a href="https://www.manilagrey.com/" target="_blank">Website</a>, '             '<a href="https://open.spotify.com/artist/7KC9q5wx0bxMD5ABgLCoEd" target="_blank">Spotify</a>,     '             '<a href="https://www.youtube.com/channel/UCUNC9hmB6I7MvY2w2LF5fUQ" target="_blank">Youtube</a>     '             '<a href="https://www.instagram.com/manilagrey/?hl=en" target="_blank">Instagram</a>'             '<a href="https://facebook.com/manilagreymusic" target="_blank">Facebook</a>'
              , unsafe_allow_html=True)
+
+
+# In[ ]:
+
+
+elif add_selectbox == 'Objective':
+    st.subheader('Objective')
+    st.write('-----------------------------')
+    st.write('Help Manila Grey land a hit in the PH top 200 daily charts')
+    st.write('How can we help manila Grey?')
+    st.write('1. What Does the Market Look Like?')
+    st.write('2. What Can we Learn from similar artists?')
+    st.write('3. What did Top songs do right?')
+    st.write('4. Are there external factors?')
 
 
 # In[ ]:
@@ -204,6 +218,7 @@ elif add_selectbox == 'Data Set':
     st.write('-----------------------------')
     
     st.markdown('<b>Data Dimensions:</b> Rows: 197800', unsafe_allow_html=True)
+    st.markdown('<b>Date Range:</b>: 2018-01-01 - 2020-09-14', unsafe_allow_html=True)
     
     st.write('<b> Top 200 Daily Charts:</b>', unsafe_allow_html=True)
 
@@ -475,19 +490,13 @@ elif add_selectbox == 'Song Genre Classification':
     st.write('<b>Feature Set</b>: <ul><li>danceability</li><li>energy</li><li>loudness</li><li>speechiness</li>'             '<li>acousticness</li><li>instrumentalness</li><li>liveness</li><li>valence</li><li>tempo</li></ul>'
              , unsafe_allow_html=True)
     
-    st.write('-----------------------------')
-    st.write('<b>Logistic Regression</b>', unsafe_allow_html=True)
-    st.write('Accuracy Score: 67%')
-    st.write('Recall Score: 36%')
-    st.write('F1 Score: 32%')
-    
     source1 = ColumnDataSource(data=dict(column_values=['danceability', 'energy', 'loudness', 'speechiness', 'acousticness', 'instrumentalness',                'liveness', 'valence', 'tempo',  'total_followers', 'artist_popularity'], 
                                          column_null_count=[-0.03169309, -0.52183742,  0.60472622,  0.1211619 , -1.27710276,
         -0.5747919 ,  0.47144994, -1.19457978,  1.51638223], 
                                          color=['#35193e', '#35193e', '#701f57','#701f57', '#ad1759','#ad1759', '#e13342', 
                                                 '#f37651','#f37651', '#f6b48f', '#f6b48f']))
     
-    logistic_feature_importance= figure(x_range=['danceability', 'energy', 'loudness', 'speechiness', 'acousticness', 'instrumentalness',            'liveness', 'valence', 'tempo',  'total_followers', 'artist_popularity'], plot_height=600, title='Linear Regression Feature Importance')
+    logistic_feature_importance= figure(x_range=['danceability', 'energy', 'loudness', 'speechiness', 'acousticness', 'instrumentalness',            'liveness', 'valence', 'tempo',  'total_followers', 'artist_popularity'], plot_height=600, title='Coefficient')
 
     logistic_feature_importance.vbar(x='column_values', top='column_null_count', width=0.5, color='color', 
                    legend_field='column_values', source=source1)
@@ -497,10 +506,24 @@ elif add_selectbox == 'Song Genre Classification':
     logistic_feature_importance.xaxis.major_label_orientation = 1.2
     logistic_feature_importance.legend.visible = False
     st.bokeh_chart(logistic_feature_importance)
+    
+    st.write('-----------------------------')
+    st.write('<b>Logistic Regression</b>', unsafe_allow_html=True)
+    st.write('Accuracy Score: 67%')
+    st.write('Recall Score: 36%')
+    st.write('F1 Score: 32%')
+    
         
     st.write('-----------------------------')
     st.write('<b>KNN Neigbors</b>', unsafe_allow_html=True)
-    st.write('Accuracy Score: 76%')
+    st.write('Optimal K: 7%')
+    st.write('Accuracy Score: 78%')
+    st.write('Recall Score: 44%')
+    
+    st.write('Feature Importance')
+    st.write('Tempo :  1.5164')
+    st.write('Acousticness : -1.2771')
+    st.write('Valence : -1.5164')
 
 
 # In[ ]:
@@ -611,10 +634,10 @@ elif add_selectbox == 'Possible Business Strategies':
     st.write('2. Collaborate with Local Arists')
     
     st.subheader('Improvements')
-    st.write('Incorporate other sources of data such as social media activity')
-    st.write('Look into the best local artists to collaborate with')
-    st.write('Try other machine learning algorithms')
-    st.write('Analyze song lyrics if we want to focus on audio features')
+    st.write('1. Incorporate other sources of data such as social media activity')
+    st.write('2. Look into the best local artists to collaborate with')
+    st.write('3. Try other machine learning algorithms')
+    st.write('4. Analyze song lyrics if we want to focus on audio features')
 
 
 # In[ ]:
