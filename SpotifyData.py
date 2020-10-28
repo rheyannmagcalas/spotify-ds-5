@@ -218,7 +218,7 @@ elif add_selectbox == 'Data Set':
     st.write('-----------------------------')
     
     st.markdown('<b>Data Dimensions:</b> Rows: 197800', unsafe_allow_html=True)
-    st.markdown('<b>Date Range:</b>: 2018-01-01 - 2020-09-14', unsafe_allow_html=True)
+    st.markdown('<b>Date Range:</b> 2018-01-01 - 2020-09-14', unsafe_allow_html=True)
     
     st.write('<b> Top 200 Daily Charts:</b>', unsafe_allow_html=True)
 
@@ -490,7 +490,9 @@ elif add_selectbox == 'Song Genre Classification':
     st.write('<b>Feature Set</b>: <ul><li>danceability</li><li>energy</li><li>loudness</li><li>speechiness</li>'             '<li>acousticness</li><li>instrumentalness</li><li>liveness</li><li>valence</li><li>tempo</li></ul>'
              , unsafe_allow_html=True)
     
-    source1 = ColumnDataSource(data=dict(column_values=['danceability', 'energy', 'loudness', 'speechiness', 'acousticness', 'instrumentalness',                'liveness', 'valence', 'tempo',  'total_followers', 'artist_popularity'], 
+    source1 = ColumnDataSource(data=dict(column_values=['danceability', 'energy', 'loudness', 'speechiness', 
+                                                        'acousticness', 'instrumentalness', 'liveness', 'valence', 
+                                                        'tempo',  'total_followers', 'artist_popularity'], 
                                          column_null_count=[-0.03169309, -0.52183742,  0.60472622,  0.1211619 , -1.27710276,
         -0.5747919 ,  0.47144994, -1.19457978,  1.51638223], 
                                          color=['#35193e', '#35193e', '#701f57','#701f57', '#ad1759','#ad1759', '#e13342', 
@@ -536,91 +538,135 @@ elif add_selectbox == 'Recommender Engine':
     
     
     if st.button('Check Results'):        
-        
-        chart_tracks_df = pickle.load(open("chart_tracks_df.pkl", "rb" ))
+        chart_tracks_df = pickle.load(open("df_model.pkl", "rb" ))
         feature_cols = ['danceability', 'energy', 'loudness', 'speechiness', 'acousticness', 'instrumentalness',                    'liveness', 'valence', 'tempo']
-
-        seed_track_data = chart_tracks_df[chart_tracks_df['track_name']==user_input].iloc[0]
         
-        ## cosine_similarity
-        cosine_data = chart_tracks_df
-        cosine_data['cosine_dist'] = cosine_data.apply(lambda x: cosine_similarity(x[feature_cols].values.reshape(-1, 1),                                                                      seed_track_data[feature_cols].values.reshape(-1, 1))                                                                      .flatten()[0], axis=1)
-
-        cosine_recommendation_df = cosine_data[cosine_data['track_id']!=seed_track_data['track_id']][['track_id', 'track_name','artist_name','cosine_dist','predicted_genre']].sort_values('cosine_dist').drop_duplicates()[:10]    
-        
-        st.write('-----------------------------')
-        st.markdown('<b>Cosine Similarity Result</b>', unsafe_allow_html=True)
-            
-        cosine_table = '<table>'
-        cosine_table = '<tr><td><b>Track Name</b></td><td><b>Artist Name</b></td><td><b>Cosine Dist</b></td><td><b>Prediction Genre</b></td><td><b>Spotify Song</b></td></tr>'
-        
-        for index, row in cosine_recommendation_df.iterrows():
-            row['cosine_dist'] = round(row['cosine_dist'], 2)
-            cosine_table += '<tr><td>'+row['track_name']+'<td>'+row['artist_name']+            '</td><td>'+str(row['cosine_dist'])+'</td><td>'+str(row['predicted_genre'])+'</td>'
-            cosine_table += '<td><iframe src="https://open.spotify.com/embed/track/'+row['track_id']+'" width="300" height="100" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe></td></tr>'         
-        cosine_table += '</table>'
+        chart_tracks_df = chart_tracks_df.round({'danceability': 2, 'energy': 2, 'loudness': 2, 'speechiness': 2,
+                                                'acousticness': 2, 'instrumentalness':2, 'liveness': 2, 
+                                                'valence': 2, 'tempo': 2})
         
         import spotipy
         from spotipy.oauth2 import SpotifyClientCredentials
-        
+
         import keyring
         import time
 
-        client_id=os.environ['client_id']
-        client_secret=os.environ['client_secret']
+#             client_id=os.environ['client_id']
+#             client_secret=os.environ['client_secret']
+        username = 'rheyannmagcalas'
+        client_id='1d47ad1284b845ea82fe5e5bb7152b7c'
+        client_secret='e2e512b1e97b478f96e820403e28c8b3'
 
-        username = os.environ['username']
-        scope_playlist = 'playlist-modify-public'
-        scope_user = 'user-library-modify'
-
-        #Credentials to access the Spotify Music Data
+#             username = os.environ['username']
         manager = SpotifyClientCredentials(client_id,client_secret)
         sp = spotipy.Spotify(client_credentials_manager=manager)
+        sp_playlist = spotipy.Spotify(auth='BQAcDCdE_1ta0WWndKFnQCny9qpVsZWwqKvCN9a6YOTnahyuEoK28uc9CpDCduP_k7wUnEwf49Arg4CiY1s8H60o1CyCCXH6Btxxj8C_q-0eY49NAzi_bUvmbqoJorEWqCHfo0epLSls0mvT_N41jzoapphy_FkQr5pqTDHmUM0mrFZWzXXmBh7L87iN')
         
-        sp_user = spotipy.Spotify(auth=os.environ['user_token'])
-        sp_playlist = spotipy.Spotify(auth=os.environ['playlist_token'])
+        track_id = 0
+        artist_name = ''
+        exists = True
         
-        new_playlist_name = "Eskwelabs: Cosine Similarity Recommendations for seed track: {}".format(user_input)    
-        new_playlist = sp_playlist.user_playlist_create(username, name=new_playlist_name)   
+        if chart_tracks_df[chart_tracks_df['track_name']==user_input].empty:
+            results = sp.search(q='track:{}'.format(user_input), type='track')
+            if len(results['tracks']['items']) > 0:
+                if 'id' in results['tracks']['items'][0] and 'name' in results['tracks']['items'][0]:
+                    track_id = results['tracks']['items'][0]['id']
+                    artist_name = results['tracks']['items'][0]['artists'][0]['name']
+                    audio_features = sp.audio_features(tracks=results['tracks']['items'][0]['id'])                    
+                    chart_tracks_df = chart_tracks_df.append({'track_name': user_input, 'artist': artist_name, 
+                                            'track_id': track_id, 'danceability': audio_features[0]['danceability'],
+                                            'energy': audio_features[0]['energy'], 'loudness': audio_features[0]['loudness'],
+                                            'speechiness': audio_features[0]['speechiness'], 
+                                            'acousticness': audio_features[0]['acousticness'], 
+                                            'instrumentalness': audio_features[0]['instrumentalness'],
+                                            'liveness': audio_features[0]['liveness'], 'valence': audio_features[0]['valence'],
+                                            'valence': audio_features[0]['valence'], 'key': audio_features[0]['key'], 'tempo': audio_features[0]['tempo']
+                                           }, ignore_index=True)
+                    exists = True
+            else:
+                exists = False
+                    
+        
+        if exists:
+            seed_track_data = chart_tracks_df[chart_tracks_df['track_name']==user_input].iloc[0]
+             ## cosine_similarity
+            cosine_data = chart_tracks_df
+            cosine_data['cosine_dist'] = cosine_data.apply(lambda x: cosine_similarity(x[feature_cols].values.reshape(-1, 1),                                                                          seed_track_data[feature_cols].values.reshape(-1, 1))                                                                          .flatten()[0], axis=1)
+            cosine_recommendation_df = cosine_data[cosine_data['track_id']!=seed_track_data['track_id']][
+                ['track_id', 'track_name', 'artist', 'cosine_dist', 'danceability', 'energy','loudness', 'speechiness', 'acousticness', 'instrumentalness', 'liveness', 'valence', 'tempo']].sort_values('cosine_dist').drop_duplicates()[:10]    
 
-        sp_playlist.user_playlist_add_tracks(username, new_playlist['id'], list(cosine_recommendation_df['track_id']))
-        
-        st.markdown('<a href ="'+new_playlist['external_urls']['spotify']+'" target="_blank">Listen to Cosine Suggested Playlist</a>', unsafe_allow_html=True)
-        st.write(cosine_table, unsafe_allow_html=True)
-        
-        ## euclidean_distances
-        st.write('-----------------------------')
-        st.markdown('<b>Euclidean Distances Result</b>', unsafe_allow_html=True)
-        euclidean_data = chart_tracks_df
-        euclidean_data['euclidean_dist'] = euclidean_data.apply(lambda x: euclidean_distances(x[feature_cols].values.reshape(-1, 1),                                                                      seed_track_data[feature_cols].values.reshape(-1, 1))                                                                      .flatten()[0], axis=1)
+            st.write('-----------------------------')
+            st.markdown('<b>Cosine Similarity Result</b>', unsafe_allow_html=True)
+            cosine_table = '<table>'
+            cosine_table = '<tr><td><b>Track Name</b></td><td><b>Artist Name</b></td><td><b>Cosine Dist</b></td>'            '<td><b>Spotify Song</b></td><td><b>Danceability</b></td><td><b>Energy</b></td>'            '<td><b>Loudness</b></td><td><b>Speechiness</b></td><td><b>Acousticness</b></td>'            '<td><b>Instrumentalness</b></td><td><b>Liveness</b></td><td><b>valence</b></td><td><b>Tempo</b></td></tr>'
+            
+            for index, row in cosine_recommendation_df.iterrows():
+                row['cosine_dist'] = round(row['cosine_dist'], 2)
+                cosine_table += '<tr><td>'+row['track_name']+'<td>'+str(row['artist'])+                '</td><td>'+str(row['cosine_dist'])+'</td>'
+                cosine_table += '<td><iframe src="https://open.spotify.com/embed/track/'+row['track_id']+'" width="300" height="100" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe></td>'                '<td>'+str(row['danceability'])+'</td><td>'+str(row['energy'])+'</td><td>'+str(row['loudness'])                +'</td><td>'+str(row['speechiness'])+'</td><td>'+str(row['acousticness'])                +'</td><td>'+str(row['instrumentalness'])+'</td><td>'+str(row['liveness'])+'</td>'                +'</td><td>'+str(row['valence'])+'</td><td>'+str(row['tempo'])+'</td>'                '</tr>'         
+            cosine_table += '</table>'
 
-        euclidean_recommendation_df = euclidean_data[euclidean_data['track_id']!=seed_track_data['track_id']][['track_id', 'track_name','artist_name','euclidean_dist','predicted_genre']].sort_values('euclidean_dist')[:10]    
-        
-        euclidean_table = '<table>'
-        euclidean_table = '<tr><td><b>Track Name</b></td><td><b>Artist Name</b></td><td><b>Euclidean Dist</b></td><td><b>Prediction Genre</b></td><td><b>Spotify Song</b></td></tr>'
-        for index, row in euclidean_recommendation_df.iterrows():
-            row['euclidean_dist'] = round(row['euclidean_dist'], 2)
-            euclidean_table += '<tr><td>'+row['track_name']+'<td>'+row['artist_name']+            '</td><td>'+str(row['euclidean_dist'])+'</td><td>'+str(row['predicted_genre'])+'</td>'
-            euclidean_table += '<td><iframe src="https://open.spotify.com/embed/track/'+row['track_id']+'" width="300" height="100" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe></td></tr>'         
-        euclidean_table += '</table>'
-        st.write(euclidean_table, unsafe_allow_html=True)
+            ## Credentials to access the Spotify Music Data                        
+            new_playlist_name = "Eskwelabs: Cosine Similarity Recommendations for {}".format(user_input)    
+            new_playlist = sp_playlist.user_playlist_create(username, name=new_playlist_name)   
+
+            sp_playlist.user_playlist_add_tracks(username, new_playlist['id'], list(cosine_recommendation_df['track_id']))
+
+            st.markdown('<a href ="'+new_playlist['external_urls']['spotify']+'" target="_blank">Listen to Cosine Suggested Playlist</a>', unsafe_allow_html=True)
+            st.write(cosine_table, unsafe_allow_html=True)
+
+#             ## euclidean_distances
+#             st.write('-----------------------------')
+#             st.markdown('<b>Euclidean Distances Result</b>', unsafe_allow_html=True)
+#             euclidean_data = chart_tracks_df
+#             euclidean_data['euclidean_dist'] = euclidean_data.apply(lambda x: euclidean_distances(x[feature_cols].values.reshape(-1, 1),\
+#                                                                           seed_track_data[feature_cols].values.reshape(-1, 1))\
+#                                                                           .flatten()[0], axis=1)
+
+#             euclidean_recommendation_df = euclidean_data[euclidean_data['track_id']!=seed_track_data['track_id']][['track_id', 'track_name','artist','euclidean_dist']].sort_values('euclidean_dist')[:10]    
+            
+#             new_playlist_name = "Eskwelabs: Euclidean Distance Recommendations for seed track: {}".format(user_input)    
+#             new_playlist = sp_playlist.user_playlist_create(username, name=new_playlist_name)   
+
+#             sp_playlist.user_playlist_add_tracks(username, new_playlist['id'], list(euclidean_recommendation_df['track_id']))
+            
+            
+#             euclidean_table = '<table>'
+#             euclidean_table = '<tr><td><b>Track Name</b></td><td><b>Artist Name</b></td><td><b>Euclidean Dist</b></td><td><b>Spotify Song</b></td></tr>'
+#             for index, row in euclidean_recommendation_df.iterrows():
+#                 row['euclidean_dist'] = round(row['euclidean_dist'], 2)
+#                 euclidean_table += '<tr><td>'+row['track_name']+'<td>'+str(row['artist'])+\
+#                 '</td><td>'+str(row['euclidean_dist'])+'</td>'
+#                 euclidean_table += '<td><iframe src="https://open.spotify.com/embed/track/'+str(row['track_id'])+'" width="300" height="100" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe></td></tr>'         
+#             euclidean_table += '</table>'
+#             st.write(euclidean_table, unsafe_allow_html=True)
 
 
-        ## manhattan_distances
-        st.write('-----------------------------')
-        st.markdown('<b>Manhattan Distances Result</b>', unsafe_allow_html=True)
-        manhattan_data = chart_tracks_df
-        manhattan_data['manhattan_dist'] = manhattan_data.apply(lambda x: manhattan_distances(x[feature_cols].values.reshape(-1, 1),                                                                      seed_track_data[feature_cols].values.reshape(-1, 1))                                                                      .flatten()[0], axis=1)
-        manhattan_recommendation_df = manhattan_data[manhattan_data['track_id']!=seed_track_data['track_id']][['track_id', 'track_name','artist_name','manhattan_dist','predicted_genre']].sort_values('manhattan_dist')[:10]    
-        manhattan_table = '<table>'
-        manhattan_table = '<tr><td><b>Track Name</b></td><td><b>Artist Name</b></td><td><b>Manhatan Dist</b></td><td><b>Prediction Genre</b></td><td><b>Spotify Song</b></td></tr>'
-        for index, row in manhattan_recommendation_df.iterrows():
-            row['manhattan_dist'] = round(row['manhattan_dist'], 2)
-            manhattan_table += '<tr><td>'+row['track_name']+'<td>'+row['artist_name']+            '</td><td>'+str(row['manhattan_dist'])+'</td><td>'+str(row['predicted_genre'])+'</td>'
-            manhattan_table += '<td><iframe src="https://open.spotify.com/embed/track/'+row['track_id']+'" width="300" height="100" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe></td></tr>'         
-        manhattan_table += '</table>'
-        st.write(manhattan_table, unsafe_allow_html=True)
-        
+#             ## manhattan_distances
+#             st.write('-----------------------------')
+#             st.markdown('<b>Manhattan Distance Result</b>', unsafe_allow_html=True)
+#             manhattan_data = chart_tracks_df
+#             manhattan_data['manhattan_dist'] = manhattan_data.apply(lambda x: manhattan_distances(x[feature_cols].values.reshape(-1, 1),\
+#                                                                           seed_track_data[feature_cols].values.reshape(-1, 1))\
+#                                                                           .flatten()[0], axis=1)
+#             manhattan_recommendation_df = manhattan_data[manhattan_data['track_id']!=seed_track_data['track_id']][['track_id', 'track_name','artist','manhattan_dist']].sort_values('manhattan_dist')[:10]    
+#             new_playlist_name = "Eskwelabs: Manhattan Recommendations for seed track: {}".format(user_input)    
+#             new_playlist = sp_playlist.user_playlist_create(username, name=new_playlist_name)   
+
+#             sp_playlist.user_playlist_add_tracks(username, new_playlist['id'], list(manhattan_recommendation_df['track_id']))
+
+            
+#             manhattan_table = '<table>'
+#             manhattan_table = '<tr><td><b>Track Name</b></td><td><b>Artist Name</b></td><td><b>Manhatan Dist</b></td><td><b>Spotify Song</b></td></tr>'
+#             for index, row in manhattan_recommendation_df.iterrows():
+#                 row['manhattan_dist'] = round(row['manhattan_dist'], 2)
+#                 manhattan_table += '<tr><td>'+row['track_name']+'<td>'+str(row['artist'])+\
+#                 '</td><td>'+str(row['manhattan_dist'])+'</td>'
+#                 manhattan_table += '<td><iframe src="https://open.spotify.com/embed/track/'+row['track_id']+'" width="300" height="100" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe></td></tr>'         
+#             manhattan_table += '</table>'
+#             st.write(manhattan_table, unsafe_allow_html=True)
+        else:
+            st.write('Sorry, Track is not available')
 
 
 # In[ ]:
@@ -676,4 +722,13 @@ else:
     playlist_token = st.text_input('Playlist Token')
     if playlist_token != '':
         os.environ['playlist_token'] = playlist_token
+
+
+# In[11]:
+
+
+# with open('df_model.pkl', 'rb') as handle:
+#     sample_song = pickle.load(handle)
+    
+# sample_song.head(20)
 
