@@ -1,4 +1,4 @@
-# [Spotify Recommender Engine for RnB Documentation](spotify-ds-cohort-5.herokuapp.com/)
+# [Spotify Recommender Engine for RnB Documentation](https://spotify-ds-cohort-5.herokuapp.com/)
 
 ### Contributors
 * [Danilo Gubaton Jr.](https://www.linkedin.com/in/dcgubatonjr/)
