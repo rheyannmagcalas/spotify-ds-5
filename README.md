@@ -1,29 +1,11 @@
-# Foobar
+# [Spotify Recommender Engine for RnB Documentation](spotify-ds-cohort-5.herokuapp.com/)
 
-Foobar is a Python library for dealing with word pluralization.
+### Contributors
+* [Danilo Gubaton Jr.](https://www.linkedin.com/in/dcgubatonjr/)
+* [Fili Emerson Chua](https://www.linkedin.com/in/fili-emerson-chua/)
+* [ Justine Brian Santoalla](https://www.linkedin.com/in/jbsantoalla/)
+* [Rhey Ann Magcalas](https://www.linkedin.com/in/rhey-ann-magcalas-47541490/)
 
-## Installation
-
-Use the package manager [pip](https://pip.pypa.io/en/stable/) to install foobar.
-
-```bash
-pip install foobar
-```
-
-## Usage
-
-```python
-import foobar
-
-foobar.pluralize('word') # returns 'words'
-foobar.pluralize('goose') # returns 'geese'
-foobar.singularize('phenomena') # returns 'phenomenon'
-```
-
-## Contributing
-Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
-
-Please make sure to update tests as appropriate.
-
-## License
-[MIT](https://choosealicense.com/licenses/mit/)
+### Special Thanks
+* [JC Albert Peralta](https://www.linkedin.com/in/jcacperalta/)
+* [John Barrion](https://www.linkedin.com/in/johnbarrion/)
