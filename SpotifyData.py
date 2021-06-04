@@ -33,14 +33,6 @@ st.markdown(
         .st-cc {
             color: white !important;
         }
-
-        .st-cc input[type="radio"]::after, .st-cg input[type="radio"]::after{
-            color: red !important;
-        }
-
-        div[data-baseweb="select"] > div {
-            background-color:  white  !important;
-        }
     </style>
     """,
     unsafe_allow_html=True
@@ -193,9 +185,9 @@ elif add_selectbox == 'Objective':
     col1, col2, col3, col4 = st.beta_columns([0.5, 2, 0.5, 2])
     col1.write('<span style="color: #1cd263; font-size: 60px;"><b>1.&nbsp;&nbsp;&nbsp;</b></span>',
                unsafe_allow_html=True)
-    col2.write('<span style="font-size: 35px;font-family:Verdana;">WHAT DOES THE MARKET LOOK LIKE?<br><br></span>',
+    col2.write('<span style="font-size: 35px;font-family:Verdana;">WHAT DOES THE MARKET LOOK LIKE?<br></span>',
                unsafe_allow_html=True)
-    col1.write('<span style="color: #1cd263; font-size: 60px;"><br><b>2.&nbsp;&nbsp;&nbsp;</b></span>',
+    col1.write('<span style="color: #1cd263; font-size: 60px;"><br><b>2.&nbsp;&nbsp;&nbsp;</b><br><br></span>',
                unsafe_allow_html=True)
     col2.write('<span style="font-size: 35px;font-family:Verdana;">WHAT CAN WE LEARN FROM SIMILAR ARTISTS?</span>',
                unsafe_allow_html=True)
@@ -244,10 +236,15 @@ elif add_selectbox == 'List of Tools':
 elif add_selectbox == 'Process Flow':
     st.subheader('Process Flow')
     st.write('-----------------------------')
-    st.markdown("<ul>"                "<li>Data Sourcing</li>"                "<li>Data Cleaning</li>"                "<li>Exploratory Data Analysis</li>"                "<li>Track Genre Classification</li>"                "<li>Feature Importance</li>"                "<li>Recommendation Engine</li>"                "<li>Deployment</li>"                "</ul>", unsafe_allow_html=True)
-
-
-# In[ ]:
+    st.markdown("<ul>"
+                "<li>Data Sourcing</li>"
+                "<li>Data Cleaning</li>"
+                "<li>Exploratory Data Analysis</li>"
+                "<li>Track Genre Classification</li>"
+                "<li>Feature Importance</li>"
+                "<li>Recommendation Engine</li>"
+                "<li>Deployment</li>"
+                "</ul>", unsafe_allow_html=True)
 
 
 elif add_selectbox == 'Data Sourcing':
@@ -257,34 +254,34 @@ elif add_selectbox == 'Data Sourcing':
     st.write("&nbsp;<span style='font-size:14px;'>Parameters:</span>", unsafe_allow_html=True)
     st.code("start_date = first target date in YYYY-mm-dd format", language='python')
     st.code("end_date = second target date in YYYY-mm-dd format", language='python')
-    st.code('regions = ["global", "us", "gb", "ad", "ar", "at", "au", "be", "bg", "bo", "br", "ca", "ch", "cl", "co", "cr", "cy", "cz", "de","dk", "do", "ec", "ee", "es", "fi", "fr", "gr", "gt", "hk", "hn", "hu", "id", "ie", "is", "it", "jp", "lt", "lu", "lv", "mc", "mt", "mx", "my", "ni", "nl", "no", "nz", "pa", "pe","ph", "pl", "pt", "py", "se", "sg", "sk", "sv", "tr", "tw", "uy"]', language='python')
+    st.code('regions = ["global", "us", "gb", "ad", "ar", "at", "au", "be", "bg", "bo", "br", "ca", "ch", "cl", "co", '
+            '"cr", "cy", "cz", "de","dk", "do", "ec", "ee", "es", "fi", "fr", "gr", "gt", "hk", "hn", "hu", "id", '
+            '"ie", "is", "it", "jp", "lt", "lu", "lv", "mc", "mt", "mx", "my", "ni", "nl", "no", "nz", "pa", "pe","ph",'
+            ' "pl", "pt", "py", "se", "sg", "sk", "sv", "tr", "tw", "uy"]', language='python')
     
-    st.write('2. <a href="https://developer.spotify.com/documentation/web-api/reference/tracks/get-audio-features/" target="_blank"> '             'Get Audio Features for a Track</a>', unsafe_allow_html=True)
+    st.write('2. <a href="https://developer.spotify.com/documentation/web-api/reference/tracks/get-audio-features/" '
+             'target="_blank"> '             'Get Audio Features for a Track</a>', unsafe_allow_html=True)
     st.code("GET https://api.spotify.com/v1/audio-features/{id}", language='python')
     st.write("&nbsp;<span style='font-size:14px;'>Parameter:</span>", unsafe_allow_html=True)
     st.code("id = The Spotify ID for the playlist.", language='python')
     
-    st.write('3. <a href="https://developer.spotify.com/documentation/web-api/reference/artists/get-artist/" target="_blank"> '             'Get Artist Details</a>', unsafe_allow_html=True)
+    st.write('3. <a href="https://developer.spotify.com/documentation/web-api/reference/artists/get-artist/" '
+             'target="_blank"> '             'Get Artist Details</a>', unsafe_allow_html=True)
     st.code("GET https://api.spotify.com/v1/artists/{id}", language='python')
     st.write("&nbsp;<span style='font-size:14px;'>Parameter:</span>", unsafe_allow_html=True)
     st.code("id = The Spotify ID for the artist.", language='python')
     
-    
-    st.write('4. <a href="https://developer.spotify.com/documentation/web-api/reference/search/search/" target="_blank"> '             'Get Playlists</a>', unsafe_allow_html=True)
+    st.write('4. <a href="https://developer.spotify.com/documentation/web-api/reference/search/search/" '
+             'target="_blank"> '             'Get Playlists</a>', unsafe_allow_html=True)
     
     st.write("&nbsp;<span style='font-size:14px;'>Parameters:</span>", unsafe_allow_html=True)
     st.code("q = Search query keywords", language='python')
     st.code("type = A comma-separated list of item types to search across.", language='python')
     st.code("market = An ISO 3166-1 alpha-2 country code", language='python')
     
-    st.write('5. <a href="https://pypi.org/project/wikipedia/" target="_blank"> '             'Checking if an artist is a Filipino</a>', unsafe_allow_html=True)
-    
+    st.write('5. <a href="https://pypi.org/project/wikipedia/" target="_blank"> Checking if an artist is a Filipino</a>'
+             , unsafe_allow_html=True)
     st.write('6. Get Manila Grey Songs and Audio Features', unsafe_allow_html=True)
-    
-
-
-# In[ ]:
-
 
 elif add_selectbox == 'Data Set':
     st.subheader('Data Set')
@@ -295,7 +292,6 @@ elif add_selectbox == 'Data Set':
     
     st.write('<b> Top 200 Daily Charts:</b>', unsafe_allow_html=True)
 
-    
     data_details = {
         'columns': ['date', 'position', 'track_id', 'track_name', 'artist', 'streams'],
         'Description': ['Current Date of the Chart', 'Place in the Chart', 'Unique Identifier for the Song', 'Song Name', 'Name of the Singer', 'Total Number of Streams'],
@@ -310,18 +306,19 @@ elif add_selectbox == 'Data Set':
 
     data_details = {
         'columns': ['duration_ms', 'key', 'mode', 'acousticness', 'danceability', 'energy', 'instrumentalness',
-                   'liveness', 'loudness', 'speechiness', 'valence', 'tempo'],
+                    'liveness', 'loudness', 'speechiness', 'valence', 'tempo'],
         'Description': ['The duration of the track in milliseconds.', 'The estimated overall key of the track.',
-                       'Indicates the modality (major or minor) of a track, the type of scale from which its melodic content is derived.',
-                       'A confidence measure from 0.0 to 1.0 of whether the track is acoustic.', 
-                       'Describes how suitable a track is for dancing based on a combination of musical elements including '\
-                        'tempo, rhythm stability, beat strength, and overall regularity.',
-                       'A measure from 0.0 to 1.0 and represents a perceptual measure of intensity and activity.',
-                       'Predicts whether a track contains no vocals.', 'Detects the presence of an audience in the recording.',
-                        'The overall loudness of a track in decibels (dB).', 'Detects the presence of spoken words in a track.',
+                        'Indicates the modality (major or minor) of a track, the type of scale from which its melodic '
+                        'content is derived.', 'A confidence measure from 0.0 to 1.0 of whether the track is acoustic.',
+                        'Describes how suitable a track is for dancing based on a combination of musical elements '
+                        'including tempo, rhythm stability, beat strength, and overall regularity.',
+                        'A measure from 0.0 to 1.0 and represents a perceptual measure of intensity and activity.',
+                        'Predicts whether a track contains no vocals.',
+                        'Detects the presence of an audience in the recording.',
+                        'The overall loudness of a track in decibels (dB).',
+                        'Detects the presence of spoken words in a track.',
                         'A measure from 0.0 to 1.0 describing the musical positiveness conveyed by a track.', 
-                        'The overall estimated tempo of a track in beats per minute (BPM). '
-                       ],
+                        'The overall estimated tempo of a track in beats per minute (BPM). '],
         'Data Types': ['2018-01-01', 1, '0ofbQMrRDsUaVKq2mGLEAb', '2', '2', '1', 1, 2, 3, 1, 1, 1]
     }
     
@@ -338,11 +335,6 @@ elif add_selectbox == 'Data Set':
                      }
     
     st.table(dataset_sample)
-    
-
-
-# In[ ]:
-
 
 elif add_selectbox == 'Data Cleaning':
     st.subheader('Data Cleaning')
@@ -353,9 +345,6 @@ elif add_selectbox == 'Data Cleaning':
     st.write('3. Merge RNB Tracks to Top 200 Tracks')
 
 
-# In[ ]:
-
-
 elif add_selectbox == 'Exploratory Data Analysis':
     caching.clear_cache()
     st.subheader('Exploratory Data Analysis')
@@ -363,109 +352,76 @@ elif add_selectbox == 'Exploratory Data Analysis':
     
     option = st.selectbox(
      'Topics:',
-     ('1. Top 200 Charts', '2. R&B Top 200 Distribution', '3. Manila Grey & R&B Top 200 Distribution', 
-     '4. Get Similar Artists', '5. Feature Importance', '6. Correlation Matrix'))
-    
+     ('1. Top 200 Charts', '2. R&B Top 200 Distribution', '3. Manila Grey & R&B Top 200 Distribution',
+      '4. Get Similar Artists', '5. Feature Importance', '6. Correlation Matrix'))
+
+    st.set_option('deprecation.showPyplotGlobalUse', False)
+
     if option == '1. Top 200 Charts':
-        st.write('<table><tr><td>Unique Artists</td><td>Unique Track Name</td><td>Unique Track ID</td></tr>'                 '<tr><td>605</td><td>1826</td><td>2292</td></tr></table>', unsafe_allow_html=True)
 
-        st.write('-----------------------------')
-        st.write('Top 200 Overall')
-        source1 = ColumnDataSource(data=dict(column_values=['Taylor Swift', 'December Avenue', 'Lauv', 'Moira Dela Torre', 'LANY',
-       'Ed Sheeran', 'Ben&Ben', 'BTS', 'Sam Smith', 'This Band'], 
-                                         column_null_count=[1336, 1242, 1231,  957,  916,  891,  763,  713,  654,  621], 
-                                         color=['#35193e', '#35193e', '#701f57','#701f57', '#ad1759','#ad1759', '#e13342', 
-                                                '#f37651','#f37651', '#f6b48f', '#f6b48f']))
-    
-        xgb_feature_importance= figure(x_range=['Taylor Swift', 'December Avenue', 'Lauv', 'Moira Dela Torre', 'LANY',
-       'Ed Sheeran', 'Ben&Ben', 'BTS', 'Sam Smith', 'This Band'], plot_height=600, title='Top 20 Most Occuring Artists')
+        st.write('<table>'
+                 '<tr>'
+                 '<td>Unique Artists</td>'
+                 '<td>Unique Track Name</td>'
+                 '<td>Unique Track ID</td></tr>'
+                 '<tr><td>605</td><td>1826</td><td>2292</td>'
+                 '</tr>'
+                 '</table>', unsafe_allow_html=True)
 
-        xgb_feature_importance.vbar(x='column_values', top='column_null_count', width=0.5, color='color', 
-                       legend_field='column_values', source=source1)
+        st.write('----------------')
+        st.write('Overall')
+        df = pd.DataFrame({'artists': ['Taylor Swift', 'December Avenue', 'Lauv', 'Moira Dela Torre', 'LANY',
+                                       'Ed Sheeran', 'Ben&Ben', 'BTS', 'Sam Smith', 'This Band'],
+                           'streams': [1336, 1242, 1231,  957,  916,  891,  763,  713,  654, 621]})
+        plt.figure(figsize=(15, 8))
+        ax = sns.barplot(data=df, x='streams', y='artists', orient='h', ci=None, color='#1cd263')
+        ax.set_title('Top 20 Most Occurring Artists')
+        ax.set(xlabel='Total Streams', ylabel='Artists')
+        st.pyplot()
 
-        xgb_feature_importance.xaxis.axis_label = 'Artists'
-        xgb_feature_importance.yaxis.axis_label = 'Total Streams'
-        xgb_feature_importance.xaxis.major_label_orientation = 1.2
-        xgb_feature_importance.legend.visible = False
-        st.bokeh_chart(xgb_feature_importance)
-        
-        
-        source1 = ColumnDataSource(data=dict(column_values=['Kathang Isip',"Kung 'Di Rin Lang Ikaw",'Sana',
-                                                            'Maybe The Night','Sa Ngalan Ng Pag-Ibig','Mundo',
-                                                            'Buwan', 'Pagtingin','Malibu Nights','IDGAF'], column_null_count=[117417737, 111660025, 102183621,  98601014,  87436861,  85182154, 75693387,  71359213,  65806253,  64416473], 
-                                             color=['#35193e', '#35193e', '#701f57','#701f57', '#ad1759','#ad1759', '#e13342', 
-                                                '#f37651','#f37651', '#f6b48f', '#f6b48f']))
-    
-        xgb_feature_importance= figure(x_range=['Kathang Isip',"Kung 'Di Rin Lang Ikaw",'Sana',
-                                                            'Maybe The Night','Sa Ngalan Ng Pag-Ibig','Mundo',
-                                                            'Buwan', 'Pagtingin','Malibu Nights','IDGAF'], 
-                                       plot_height=600, title='Top 10 Songs')
+        df = pd.DataFrame({'songs': ['Kathang Isip', "Kung 'Di Rin Lang Ikaw", 'Sana',
+                                     'Maybe The Night', 'Sa Ngalan Ng Pag-Ibig', 'Mundo',
+                                     'Buwan', 'Pagtingin', 'Malibu Nights', 'IDGAF'],
+                           'streams': [117417737, 111660025, 102183621,  98601014,  87436861,  85182154, 75693387,
+                                       71359213,  65806253,  64416473]})
+        plt.figure(figsize=(15, 8))
+        ax = sns.barplot(data=df, x='streams', y='songs', orient='h', ci=None, color='#1cd263')
+        ax.set_title('Top 10 Songs')
+        ax.set(xlabel='Total Streams', ylabel='Songs')
+        st.pyplot()
 
-        xgb_feature_importance.vbar(x='column_values', top='column_null_count', width=0.5, color='color', 
-                       legend_field='column_values', source=source1)
-
-        xgb_feature_importance.xaxis.axis_label = 'Tracks'
-        xgb_feature_importance.yaxis.axis_label = 'Total Streams'
-        xgb_feature_importance.xaxis.major_label_orientation = 1.2
-        xgb_feature_importance.legend.visible = False
-        st.bokeh_chart(xgb_feature_importance)
-        
+        st.write('----------------')
         st.write('Filipino Tracks in Top 200')
-        source1 = ColumnDataSource(data=dict(column_values=['Maybe The Night','Mundo','Sana','Buwan','Kahit Ayaw Mo Na',
-                                                            'Zebbiana','Imahe','Make It With You','Catriona','Hayaan Mo Sila',
-                                                            'Sa Susunod na Habang Buhay','Teka Lang'], 
-                                         column_null_count=[963, 946, 787, 719, 714, 411, 278, 277, 277, 174], 
-                                         color=['#35193e', '#35193e', '#701f57','#701f57', '#ad1759','#ad1759', '#e13342', 
-                                                '#f37651','#f37651', '#f6b48f', '#f6b48f']))
-    
-        filipino_tracks= figure(x_range=['Maybe The Night','Mundo','Sana','Buwan','Kahit Ayaw Mo Na',
-                                                            'Zebbiana','Imahe','Make It With You','Catriona','Hayaan Mo Sila',
-                                                            'Sa Susunod na Habang Buhay','Teka Lang'], plot_height=600, 
-                                title='Top Filipino Tracks in Top 200')
+        df = pd.DataFrame({'songs': ['Maybe The Night', 'Mundo', 'Sana', 'Buwan', 'Kahit Ayaw Mo Na', 'Zebbiana',
+                                     'Imahe', 'Make It With You', 'Catriona', 'Hayaan Mo Sila'],
+                           'streams': [963, 946, 787, 719, 714,  411, 278, 277, 277, 174]})
+        plt.figure(figsize=(15, 8))
+        ax = sns.barplot(data=df, x='streams', y='songs', orient='h', ci=None, color='#1cd263')
+        ax.set_title('Top Filipino Tracks in Top 200')
+        ax.set(xlabel='Total Streams', ylabel='Track Names')
+        st.pyplot()
 
-        filipino_tracks.vbar(x='column_values', top='column_null_count', width=0.5, color='color', 
-                       legend_field='column_values', source=source1)
+        df = pd.DataFrame({'artists': ['Ben&Ben', 'Moira Dela Torre', 'This Band', 'Matthaios', 'Ex Battalion',
+                                     'The Juans', 'Skusta Clee', 'Shanti Dope', 'Sarah Geronimo', 'Magnus Haven'],
+                           'streams': [8, 5, 3, 2, 2, 1, 1, 1, 1, 1]})
+        plt.figure(figsize=(15, 8))
+        ax = sns.barplot(data=df, x='streams', y='artists', orient='h', ci=None, color='#1cd263')
+        ax.set_title('Top 10 Filipino Artists in Top 200')
+        ax.set(xlabel='Total Streams', ylabel='Artists')
+        st.pyplot()
 
-        filipino_tracks.xaxis.axis_label = 'Track Names'
-        filipino_tracks.yaxis.axis_label = 'Total Streams'
-        filipino_tracks.xaxis.major_label_orientation = 1.2
-        filipino_tracks.legend.visible = False
-        st.bokeh_chart(filipino_tracks)
-        
-        
-        source1 = ColumnDataSource(data=dict(column_values=['Ben&Ben','Moira Dela Torre', 'This Band','Matthaios',
-                                                            'Ex Battalion','The Juans','Skusta Clee','Shanti Dope',
-                                                            'Sarah Geronimo','Magnus Haven','Darren Espanto'], 
-                                         column_null_count=[8, 5, 3, 2, 2, 1, 1, 1, 1, 1,], 
-                                         color=['#35193e', '#35193e', '#701f57','#701f57', '#ad1759','#ad1759', '#e13342', 
-                                                '#f37651','#f37651', '#f6b48f', '#f6b48f']))
-    
-        filipino_artist= figure(x_range=['Ben&Ben','Moira Dela Torre', 'This Band','Matthaios',
-                                                            'Ex Battalion','The Juans','Skusta Clee','Shanti Dope',
-                                                            'Sarah Geronimo','Magnus Haven','Darren Espanto'], plot_height=600, 
-                                title='Top Filipino Artist in Top 200')
-
-        filipino_artist.vbar(x='column_values', top='column_null_count', width=0.5, color='color', 
-                       legend_field='column_values', source=source1)
-
-        filipino_artist.xaxis.axis_label = 'Track Names'
-        filipino_artist.yaxis.axis_label = 'Total Streams'
-        filipino_artist.xaxis.major_label_orientation = 1.2
-        filipino_artist.legend.visible = False
-        st.bokeh_chart(filipino_artist)
-        
-        
-    
-        
     elif option == '2. R&B Top 200 Distribution':
-        
-        st.markdown('<span style="margin-left:5%">1. R&B Data </span>', unsafe_allow_html=True)
-        st.markdown('<span style="margin-left:5%">2. Merge Top 200 and R&B Data </span>', unsafe_allow_html=True)
-        st.markdown('<span style="margin-left:5%">3. Check How Many R&B Songs in Top 200 </span>', unsafe_allow_html=True)
-        st.markdown('<span style="margin-left:8%">a. <b>Count:</b> 37/2292 </span>', unsafe_allow_html=True)
-        st.markdown('<span style="margin-left:8%">b. <b>Percentage:</b> 1.61% </span>', unsafe_allow_html=True)
-        
-        st.markdown('<span style="margin-left:5%">Conclusion: R&B is a tough market</span>', unsafe_allow_html=True)
+        col1, col2= st.beta_columns([1, 4])
+        image = Image.open('logo/r&b distributions.png')
+        col1.write('<span style="color: #1cd263; font-size: 60px;"><b>85%&nbsp;&nbsp;&nbsp;</b></span>',
+                   unsafe_allow_html=True)
+        col1.write('<span>of the artists in the Top 200 dataset are international artists.</span>',
+                   unsafe_allow_html=True)
+        col1.write('<span style="color: #1cd263; font-size: 60px;"><b>83%&nbsp;&nbsp;&nbsp;</b></span>',
+                   unsafe_allow_html=True)
+        col1.write('<span>of the tracks in the Top 200 dataset are from international artists.</span>',
+                   unsafe_allow_html=True)
+        col2.image(image, caption='', use_column_width=True)
 
     elif option == '3. Manila Grey & R&B Top 200 Distribution':
         with open('top_200_rnb.pkl', 'rb') as handle:
@@ -475,24 +431,112 @@ elif add_selectbox == 'Exploratory Data Analysis':
 
         with open('seed_tracks.pkl', 'rb') as handle:
             manila_grey_songs = pickle.load(handle)
-         
-        for col in ['danceability', 'energy','loudness', 'speechiness', 'acousticness', 'instrumentalness','liveness', 'valence', 'tempo']:
-            fig = plt.figure()
-            ax= fig.add_subplot(111)
 
-            sns.distplot(df_Non200[col], ax=ax, label= 'R&B')
-            sns.distplot(manila_grey_songs[col], ax=ax, label= 'Manila Grey')
-            plt.ylabel('Frequency')
-            plt.legend(frameon=False)
-            plt.show()
-            
-            st.pyplot(fig)
-        
+        col1, col2, col3, col4 = st.beta_columns([2, 2, 2, 2])
+
+        col1.write('<span style="color: #1cd263; font-size: 60px;"><b>R&B&nbsp;&nbsp;&nbsp;</b></span>',
+                   unsafe_allow_html=True)
+
+        col1.write("<span> seems to be the best genre that describes Manila Grey’s music based on audio features."
+                   "</span>", unsafe_allow_html=True)
+
+        col1.write('<span style="color: #1cd263; font-size: 60px;"><b>1.6%&nbsp;&nbsp;&nbsp;</b></span>',
+                   unsafe_allow_html=True)
+
+        col1.write("<span> of the Top 200 dataset were classified as R&B"
+                   "</span>", unsafe_allow_html=True)
+
+        col1.write('<span style="color: #1cd263; font-size: 40px;"><b>TOUGH MARKET!&nbsp;&nbsp;&nbsp;</b></span>',
+                   unsafe_allow_html=True)
+
+        fig = plt.figure()
+        ax = fig.add_subplot(111)
+        sns.distplot(df_Non200['danceability'], ax=ax, label='R&B')
+        sns.distplot(manila_grey_songs['danceability'], ax=ax, label='Manila Grey')
+        plt.ylabel('Frequency')
+        plt.legend(frameon=False)
+        col2.pyplot(fig)
+
+        fig = plt.figure()
+        ax = fig.add_subplot(111)
+        sns.distplot(df_Non200['loudness'], ax=ax, label='R&B')
+        sns.distplot(manila_grey_songs['loudness'], ax=ax, label='Manila Grey')
+        plt.ylabel('Frequency')
+        plt.legend(frameon=False)
+        col3.pyplot(fig)
+
+        fig = plt.figure()
+        ax = fig.add_subplot(111)
+        sns.distplot(df_Non200['energy'], ax=ax, label='R&B')
+        sns.distplot(manila_grey_songs['energy'], ax=ax, label='Manila Grey')
+        plt.ylabel('Frequency')
+        plt.legend(frameon=False)
+        col4.pyplot(fig)
+
+        fig = plt.figure()
+        ax = fig.add_subplot(111)
+        sns.distplot(df_Non200['loudness'], ax=ax, label='R&B')
+        sns.distplot(manila_grey_songs['loudness'], ax=ax, label='Manila Grey')
+        plt.ylabel('Frequency')
+        plt.legend(frameon=False)
+        col2.pyplot(fig)
+
+        fig = plt.figure()
+        ax = fig.add_subplot(111)
+        sns.distplot(df_Non200['speechiness'], ax=ax, label='R&B')
+        sns.distplot(manila_grey_songs['speechiness'], ax=ax, label='Manila Grey')
+        plt.ylabel('Frequency')
+        plt.legend(frameon=False)
+        col3.pyplot(fig)
+
+        fig = plt.figure()
+        ax = fig.add_subplot(111)
+        sns.distplot(df_Non200['acousticness'], ax=ax, label='R&B')
+        sns.distplot(manila_grey_songs['acousticness'], ax=ax, label='Manila Grey')
+        plt.ylabel('Frequency')
+        plt.legend(frameon=False)
+        col4.pyplot(fig)
+
+        fig = plt.figure()
+        ax = fig.add_subplot(111)
+        sns.distplot(df_Non200['instrumentalness'], ax=ax, label='R&B')
+        sns.distplot(manila_grey_songs['instrumentalness'], ax=ax, label='Manila Grey')
+        plt.ylabel('Frequency')
+        plt.legend(frameon=False)
+        col2.pyplot(fig)
+
+        fig = plt.figure()
+        ax = fig.add_subplot(111)
+        sns.distplot(df_Non200['liveness'], ax=ax, label='R&B')
+        sns.distplot(manila_grey_songs['instrumentalness'], ax=ax, label='Manila Grey')
+        plt.ylabel('Frequency')
+        plt.legend(frameon=False)
+        col3.pyplot(fig)
+
+        fig = plt.figure()
+        ax = fig.add_subplot(111)
+        sns.distplot(df_Non200['valence'], ax=ax, label='R&B')
+        sns.distplot(manila_grey_songs['valence'], ax=ax, label='Manila Grey')
+        plt.ylabel('Frequency')
+        plt.legend(frameon=False)
+        col4.pyplot(fig)
+
+        fig = plt.figure()
+        ax = fig.add_subplot(111)
+        sns.distplot(df_Non200['tempo'], ax=ax, label='R&B')
+        sns.distplot(manila_grey_songs['tempo'], ax=ax, label='Manila Grey')
+        plt.ylabel('Frequency')
+        plt.legend(frameon=False)
+        col2.pyplot(fig)
+
         st.write('Top 200')
-        st.table(df_200[['danceability', 'energy', 'key',       'loudness', 'mode', 'speechiness', 'acousticness', 'instrumentalness',       'liveness', 'valence', 'tempo']].describe())
+        st.table(df_200[['danceability', 'energy', 'key', 'loudness', 'mode', 'speechiness', 'acousticness',
+                         'instrumentalness', 'liveness', 'valence', 'tempo']].describe())
         
         st.write('R&B Top 200')
-        st.table(df_Non200[['danceability', 'energy', 'key',        'loudness', 'mode', 'speechiness', 'acousticness', 'instrumentalness',        'liveness', 'valence', 'tempo']].describe())
+        st.table(df_Non200[['danceability', 'energy', 'key', 'loudness', 'mode', 'speechiness', 'acousticness',
+                            'instrumentalness', 'liveness', 'valence', 'tempo']].describe())
+
     elif option == '4. Get Similar Artists':
         st.write('1. Kiyo')
         image = Image.open('logo/kiyo.jpg')
@@ -506,6 +550,7 @@ elif add_selectbox == 'Exploratory Data Analysis':
         image = Image.open('logo/XXXTENTACION.jpg')
         st.image(image, caption='', use_column_width=True)
         st.write('Popularity: 93 Followers: 22.4 millions')
+
     elif option == '5. Feature Importance':
         caching.clear_cache()
         st.write('Feature Importance Result from XBoost')
