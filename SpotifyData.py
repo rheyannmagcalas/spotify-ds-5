@@ -1,11 +1,5 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# In[1]:
-
 
 import matplotlib.pyplot as plt
-import numpy as np
 import os
 import pandas as pd
 import pickle
@@ -14,10 +8,6 @@ import streamlit as st
 
 from bokeh.plotting import figure, output_file
 from bokeh.models import ColumnDataSource
-from bokeh.palettes import Spectral
-from bokeh.palettes import Spectral6, Magma, Inferno
-from bokeh.themes import built_in_themes
-from bokeh.io import curdoc
 
 from datetime import date, timedelta
 from IPython import get_ipython
@@ -26,72 +16,142 @@ from streamlit import caching
 
 from sklearn.metrics.pairwise import euclidean_distances, manhattan_distances, cosine_similarity
 
+st.set_page_config(
+    page_title="Succeeding Back Home",
+    layout="wide",
+    initial_sidebar_state="expanded",
+)
 
-# ### Setting Title of the Web
+st.markdown(
+    """
+    <style>
+        .css-hby737, .css-17eq0hr {
+            background-color: #34444c !important;
+            color:white !important;
+        }
+        
+        .st-cc {
+            color: white !important;
+        }
 
-# In[11]:
+        .st-cc input[type="radio"]::after, .st-cg input[type="radio"]::after{
+            color: red !important;
+        }
+
+        div[data-baseweb="select"] > div {
+            background-color:  white  !important;
+        }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
 
 
-st.title('Spotify Data')
-
-
-# ### Side Bar Information
-
-# In[18]:
-
-
-image = Image.open('logo/eskwelabs.png')
-st.sidebar.image(image, caption='', use_column_width=True)
-st.sidebar.markdown("<h1 style='text-align: center;margin-bottom:50px'>DS Cohort V</h1>", unsafe_allow_html=True)
+st.sidebar.markdown("<h1 style='text-align: center;margin-bottom:50px; color: white'>"
+                    "<span style='color:#1cd263'>Succeeding Back Home</span></h1>",
+                    unsafe_allow_html=True)
 
 
 add_selectbox = st.sidebar.radio(
     "",
-    ("Introduction", "Client Profile", "Objective", "List of Tools", "Process Flow", "Data Sourcing", "Data Set", 
+    ("Client Profile", "Objective", "List of Tools", "Process Flow", "Data Sourcing", "Data Set",
      "Data Cleaning", "Exploratory Data Analysis", "Song Genre Classification", "Recommender Engine", 
-     "Possible Business Strategies", "Contributors", "Spotify Settings")
+     "Possible Business Strategies", "Contributors")
 )
 
 
 # In[23]:
 
 
-if add_selectbox == 'Introduction':
-    st.write('')
-    st.subheader('Introduction')
-    st.write('-----------------------------------------------------------------------') 
-    st.write('<b>BUSINESS OBJECTIVE:</b>', unsafe_allow_html=True)
-    st.write('Provide unique and actionable insights and strategies on how to boost streams of the artists they handle in the market')
-    
-    st.write('<b>MARKET:</b>', unsafe_allow_html=True)
-    st.markdown("<ul>"                "<li>What are the current trends in the music stream market?</li>"                "<li>What qualities are common among top-streamed music?</li>"                "<li>How has the client artist/target genre performed in the past years?</li>"                "</ul>", unsafe_allow_html=True)
-                
-    st.write('<b>CLIENT:</b>', unsafe_allow_html=True)
-    st.markdown("<ul>"                "<li><i>Artist</i>: Based on listener data, which artist should client collaborate with in their next release?</li>"                "<li><i>Production:</i> Based on the listener data, which genre should client focus on their next release? </li>"                "<li><i>Promotions:</i> Based on the listener data, which artists should we market together in featured playlists/events? </li>"                "</ul>", unsafe_allow_html=True)
+# if add_selectbox == 'Introduction':
+#     st.subheader('Introduction')
+#     st.write('-----------------------------------------------------------------------')
+#     st.write('<b>BUSINESS OBJECTIVE:</b>', unsafe_allow_html=True)
+#     st.write('Provide unique and actionable insights and strategies on how to boost streams of the artists they handle '
+#              'in the market')
+#
+#     st.write('<b>MARKET:</b>', unsafe_allow_html=True)
+#     st.markdown("<ul>"
+#                 "<li>What are the current trends in the music stream market?</li>"
+#                 "<li>What qualities are common among top-streamed music?</li>"
+#                 "<li>How has the client artist/target genre performed in the past years?</li></ul>",
+#                 unsafe_allow_html=True)
+#
+#     st.write('<b>CLIENT:</b>', unsafe_allow_html=True)
+#     st.markdown("<ul>"
+#                 "<li><i>Artist</i>: Based on listener data, which artist should client collaborate with in their "
+#                 "next release?</li>"
+#                 "<li><i>Production:</i> Based on the listener data, which genre should client focus on their next "
+#                 "release? </li>"
+#                 "<li><i>Promotions:</i> Based on the listener data, which artists should we market together in featured"
+#                 "playlists/events? </li>"\
+#                 "</ul>", unsafe_allow_html=True)
 
-
-# In[ ]:
-
-
-elif add_selectbox == 'Client Profile':
+if add_selectbox == 'Client Profile':
     st.subheader('Client Profile')
     st.write('-----------------------------')
-    image = Image.open('logo/client.png').convert('RGB')
-    st.image(image, caption='', width=800, height=200)
-    
-    st.write('<h3><b>Manila Grey</b></h3> Musical duo <br><br>', unsafe_allow_html=True)
+    col1, col2 = st.beta_columns([2, 3])
+    col1.write('<span style="color:#1cd263; font-size:50px;"><b>MANILA GREY</b></span>', unsafe_allow_html=True)
+    col1.write('A Filipino Canadian singer-rapper duo of childhood friends Soliven and Neeko. The pair have been making'
+               'music for a while but have only been active as MANILA GREY since 2016. They make West Coast wave music '
+               'influenced by their Southeast Asian lineage.')
 
-    st.write('Filipino-Canadian group MANILA GREY is here to help bridge the East and West. The R&B duo '             'is comprised of childhood friends Neeko and Soliven, who grew up in Vancouver at a time when there were '             'few Asian personalities to serve as influences.')
-    
-    st.write('-----------------------------')
-    st.text('Spotify Statistics as of 10/16/2020')
-    st.write('<table>'             '<tr><td><b>Popularity</b></td><td><b>Total Followers</b></td><td><b>Monthly Listeners</b></td></tr>'             '<tr><td>56</td><td>67077</td><td>246030</td></tr>'             '</table><br/>', unsafe_allow_html=True)
-    
-    st.text('Where People Listens as of 10/16/2020')
-    st.write('<table>'             '<tr><td>Quezon City, PH</td><td>17,276 Listeners</td></tr>'             '<tr><td>Toronto, Ca</td><td>8, 963 Listeners</td></tr>'             '<tr><td>Vancouver, Ca</td><td>8, 155 Listeners</td></tr>'             '<tr><td>Makati City, PH</td><td>6, 596 Listeners</td></tr>'             '<tr><td>Manila, PH</td><td>6, 204 Listeners</td></tr>'             '</table><br/>', unsafe_allow_html=True)
+    image = Image.open('logo/client.png')
+    col2.image(image, caption='', width=500)
+
+    st.write('')
+    col1, col2 = st.beta_columns([2, 3])
+    col1.text('Where People Listens as of 10/16/2020')
+    col1.write(
+        '<table>'             '<tr><td>Quezon City, PH</td><td>17,276 Listeners</td></tr>'             '<tr><td>Toronto, Ca</td><td>8, 963 Listeners</td></tr>'             '<tr><td>Vancouver, Ca</td><td>8, 155 Listeners</td></tr>'             '<tr><td>Makati City, PH</td><td>6, 596 Listeners</td></tr>'             '<tr><td>Manila, PH</td><td>6, 204 Listeners</td></tr>'             '</table><br/>',
+        unsafe_allow_html=True)
+
+    col2.text('Spotify Statistics as of 10/16/2020')
+    col2.write('<table>'
+               '<tr>'
+               '<td><b>Spotify Popularity</b></td>'
+               '<td><span style="color:#1cd263;"><b>56</b></span></td>'
+               '</tr>'
+               '<tr>'
+               '<td><b>Total Followers</b></td>'
+               '<td><span style="color:#1cd263;"><b>67077</b></span></td>'
+               '</tr>'
+               '<tr>'
+               '<td><b>Monthly Listeners</b></td>'
+               '<td><span style="color:#1cd263;"><b>246030</b></span></td>'
+               '</tr>'
+               '</table><br/>', unsafe_allow_html=True)
+
     st.write('-----------------------------')
     st.write('<b>Playlist</b>', unsafe_allow_html=True)
-    st.write('<table><tr><td><iframe src="https://open.spotify.com/embed/playlist/37i9dQZF1DX7FY5ma9162x" '             'width="300" height="100" frameborder="0" allowtransparency="true" allow="encrypted-media">'             '</iframe></td></tr>'             '<tr><td><iframe src="https://open.spotify.com/embed/playlist/37i9dQZF1DWW4igXXl2Qkp" '             'width="300" height="100" frameborder="0" allowtransparency="true" allow="encrypted-media">'             '</iframe></td></tr>'             '<tr><td><iframe src="https://open.spotify.com/embed/playlist/1Os7m597ihMJ4xTohCkZIz" '             'width="300" height="100" frameborder="0" allowtransparency="true" allow="encrypted-media">'             '</iframe></td></tr>'             '<tr><td><iframe src="https://open.spotify.com/embed/playlist/37i9dQZF1DX59ogDi1Z2XL" '             'width="300" height="100" frameborder="0" allowtransparency="true" allow="encrypted-media">'             '</iframe></td></tr>'             '<tr><td><iframe src="https://open.spotify.com/embed/playlist/37i9dQZF1DX2WkIBRaChxW" '             'width="300" height="100" frameborder="0" allowtransparency="true" allow="encrypted-media">'             '</iframe></td></tr>'             '</table>', unsafe_allow_html=True)
+    col1, col2 = st.beta_columns(2)
+    col1.write('<table>'
+               '<tr>'
+               '<td><iframe src="https://open.spotify.com/embed/playlist/37i9dQZF1DX7FY5ma9162x" ' 
+               'width="300" height="100" frameborder="0" allowtransparency="true" allow="encrypted-media">'
+               '</iframe></td>'
+               '</tr>'
+               '<tr>'
+               '<td><iframe src="https://open.spotify.com/embed/playlist/37i9dQZF1DWW4igXXl2Qkp" width="300" '
+               'height="100" frameborder="0" allowtransparency="true" allow="encrypted-media">'
+               '</iframe></td></tr> '
+               '<tr>'
+               '<td><iframe src="https://open.spotify.com/embed/playlist/1Os7m597ihMJ4xTohCkZIz"'
+               'width="300" height="100" frameborder="0" allowtransparency="true" allow="encrypted-media">'
+               '</iframe></td></tr>'
+               '</table>', unsafe_allow_html=True)
+
+    col2.write('<table>'
+               '<tr>'
+               '<td><iframe src="https://open.spotify.com/embed/playlist/37i9dQZF1DX59ogDi1Z2XL"'
+               'width="300" height="100" frameborder="0" allowtransparency="true" allow="encrypted-media">'
+               '</iframe></td>'
+               '</tr>'
+               '<tr>'
+               '<td><iframe src="https://open.spotify.com/embed/playlist/37i9dQZF1DX2WkIBRaChxW" width="300" '
+               'height="100" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe></td>'
+               '</tr>'
+               '</table>', unsafe_allow_html=True)
     
     st.write('-----------------------------')
     st.write('<b>Albums</b>', unsafe_allow_html=True)
@@ -113,59 +173,72 @@ elif add_selectbox == 'Client Profile':
     st.write('<br><br><b>Singles and EPS</b>', unsafe_allow_html=True)
     st.write('<table>'             '<tr>'                 '<td><b>Title</b></td><td><b>Release Date</b></td> <td><b>Spotify Link</b></td>'             '</tr>'             '<tr>'                 '<td>Shibuya</td><td>2020-08-26</td>'                 '<td><iframe src="https://open.spotify.com/embed/album/0C3NEeNrQGx9i189EuWglz" width="300" height="100" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe></td>'             '</tr>'             '<tr>'                 '<td>Blue Vegata</td><td>2020-07-29</td>'                 '<td><iframe src="https://open.spotify.com/embed/album/3pbG0i2bdjZVFuzd89adGd" width="300" height="100" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe></td>'             '</tr>'             '<tr>'                 '<td>Silver Skies</td><td>2019</td>'                 '<td><iframe src="https://open.spotify.com/embed/album/1zs9AJzF5Z8rvSuHvCfnLp" width="300" height="100" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe></td>'             '</tr>'             '<tr>'                 '<td>Youth Water</td><td>2017-05-15</td>'                 '<td><iframe src="https://open.spotify.com/embed/album/32MOJzuCDZsviw1hfBDOfk" width="300" height="100" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe></td>'             '</tr>'             '<tr>'                 '<td>Friends of Friends</td><td>2018-02-23</td>'                 '<td><iframe src="https://open.spotify.com/embed/album/2m4zj5J0Ta6Mt43hadaML9" width="300" height="100" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe></td>'             '</tr>'             '<tr>'                 '<td>Midnight</td><td>2017-12-08</td>'                 '<td><iframe src="https://open.spotify.com/embed/album/7n9LerpieN1jsQLDV0NSe7" width="300" height="100" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe></td>'             '</tr>'             '<tr>'                 '<td>Free Spirit</td><td>2017</td>'                 '<td><iframe src="https://open.spotify.com/embed/album/2L6oLL2eWz8DI6JF3cqVab" width="300" height="100" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe></td>'             '</tr>'             '<tr>'                 '<td>Feel We like</td><td>2017</td>'                 '<td><iframe src="https://open.spotify.com/embed/album/7KHzZS6lw9Y9wSxnXMS6sw" width="300" height="100" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe></td>'             '</tr>'             '<tr>'                 '<td>Eastbound</td><td>2017</td>'                 '<td><iframe src="https://open.spotify.com/embed/album/12zdLt8RAuiC23P4qu7eda" width="300" height="100" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe></td>'             '</tr>'             '<tr>'                 '<td>Lined Up</td><td>2017-12-08</td>'                 '<td><iframe src="https://open.spotify.com/embed/album/3x3ilXcSBtMIuKdEBz7vEa" width="300" height="100" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe></td>'             '</tr>'             '<tr>'                 '<td>Parking Lot</td><td>2016</td>'                 '<td><iframe src="https://open.spotify.com/embed/album/7bDkp9qDtWEriKm7bQVmOu" width="300" height="100" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe></td>'             '</tr>'             '<tr>'                 '<td>1Z</td><td>2016</td>'                 '<td><iframe src="https://open.spotify.com/embed/album/3d2OWITI93qH73X9Afq3SC" width="300" height="100" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe></td>'             '</tr>'             '</table>', unsafe_allow_html=True) 
     
-    st.write('<br><br>More Info:<a href="https://www.manilagrey.com/" target="_blank">Website</a>, '             '<a href="https://open.spotify.com/artist/7KC9q5wx0bxMD5ABgLCoEd" target="_blank">Spotify</a>,     '             '<a href="https://www.youtube.com/channel/UCUNC9hmB6I7MvY2w2LF5fUQ" target="_blank">Youtube</a>     '             '<a href="https://www.instagram.com/manilagrey/?hl=en" target="_blank">Instagram</a>'             '<a href="https://facebook.com/manilagreymusic" target="_blank">Facebook</a>'
+    st.write('<br><br>More Info:<a href="https://www.manilagrey.com/" target="_blank">Website</a>, '
+             '<a href="https://open.spotify.com/artist/7KC9q5wx0bxMD5ABgLCoEd" target="_blank">Spotify</a>,'
+             '<a href="https://www.youtube.com/channel/UCUNC9hmB6I7MvY2w2LF5fUQ" target="_blank">Youtube</a>,'
+             '<a href="https://www.instagram.com/manilagrey/?hl=en" target="_blank">Instagram</a>,'
+             '<a href="https://facebook.com/manilagreymusic" target="_blank">Facebook</a>'
              , unsafe_allow_html=True)
 
 
-# In[ ]:
-
-
 elif add_selectbox == 'Objective':
-    st.subheader('Objective')
+    st.write('<span style="font-size:20px; color: #1cd263;"><b>OBJECTIVE</b></span>', unsafe_allow_html=True)
+    st.write('<span style="font-size:20px">Help Manila Grey land a hit in the PH top 200 daily charts </span>',
+             unsafe_allow_html=True)
     st.write('-----------------------------')
-    st.write('Help Manila Grey land a hit in the PH top 200 daily charts')
-    st.write('How can we help manila Grey?')
-    st.write('1. What Does the Market Look Like?')
-    st.write('2. What Can we Learn from similar artists?')
-    st.write('3. What did Top songs do right?')
-    st.write('4. Are there external factors?')
-
-
-# In[ ]:
+    st.write('')
+    st.write('<span style="font-size:20px; color: #1cd263;"><b>HOW CAN WE HELP MANILA GREY?</b></span>',
+             unsafe_allow_html=True)
+    st.write('')
+    col1, col2, col3, col4 = st.beta_columns([0.5, 2, 0.5, 2])
+    col1.write('<span style="color: #1cd263; font-size: 60px;"><b>1.&nbsp;&nbsp;&nbsp;</b></span>',
+               unsafe_allow_html=True)
+    col2.write('<span style="font-size: 35px;font-family:Verdana;">WHAT DOES THE MARKET LOOK LIKE?<br><br></span>',
+               unsafe_allow_html=True)
+    col1.write('<span style="color: #1cd263; font-size: 60px;"><br><b>2.&nbsp;&nbsp;&nbsp;</b></span>',
+               unsafe_allow_html=True)
+    col2.write('<span style="font-size: 35px;font-family:Verdana;">WHAT CAN WE LEARN FROM SIMILAR ARTISTS?</span>',
+               unsafe_allow_html=True)
+    col3.write('<span style="color: #1cd263; font-size: 60px;"><b>3.&nbsp;&nbsp;&nbsp;</b><br><br></span>',
+               unsafe_allow_html=True)
+    col4.write('<span style="font-size: 35px;font-family:Verdana;">WHAT DID TOP SONGS DO RIGHT?<br><br></span>',
+               unsafe_allow_html=True)
+    col3.write('<span style="color: #1cd263; font-size: 60px;"><b>4.&nbsp;&nbsp;&nbsp;</b></span>',
+               unsafe_allow_html=True)
+    col4.write('<span style="font-size: 35px;font-family:Verdana;">ARE THERE EXTERNAL FACTORS?<br><br></span>',
+               unsafe_allow_html=True)
 
 
 elif add_selectbox == 'List of Tools':
     st.subheader('List of Tools')
     st.write('-----------------------------')
+    col1, col2 = st.beta_columns(2)
     image = Image.open('logo/spotify.png').convert('RGB')
-    st.image(image, caption='', width=300, height=150)
+    col1.image(image, caption='', width=300)
     image = Image.open('logo/jupyter.png').convert('RGB')
-    st.image(image, caption='', width=300, height=150)
+    col2.image(image, caption='', width=300)
     image = Image.open('logo/pandas.png').convert('RGB')
-    st.image(image, caption='', width=300, height=150)
+    col1.image(image, caption='', width=300)
     image = Image.open('logo/heroku.jpg').convert('RGB')
-    st.image(image, caption='', width=150, height=50)
+    col2.image(image, caption='', width=150)
     image = Image.open('logo/streamlit.png').convert('RGB')
-    st.image(image, caption='', width=300, height=150)
+    col1.image(image, caption='', width=300)
     image = Image.open('logo/bokeh.png').convert('RGB')
-    st.image(image, caption='', width=300, height=150)
+    col2.image(image, caption='', width=300)
     image = Image.open('logo/github.png').convert('RGB')
-    st.image(image, caption='', width=300, height=150)
+    col1.image(image, caption='', width=300)
     image = Image.open('logo/regex.jpeg').convert('RGB')
-    st.image(image, caption='', width=300, height=150)
+    col2.image(image, caption='', width=300)
     image = Image.open('logo/scipy.png').convert('RGB')
-    st.image(image, caption='', width=300, height=150)
+    col1.image(image, caption='', width=300)
     image = Image.open('logo/seaborn.png').convert('RGB')
-    st.image(image, caption='', width=300, height=150)
+    col2.image(image, caption='', width=300)
     image = Image.open('logo/matplotlib.png').convert('RGB')
-    st.image(image, caption='', width=300, height=150)
+    col1.image(image, caption='', width=300)
     image = Image.open('logo/numpy.png')
-    st.image(image, caption='', width=300, height=150)
+    col2.image(image, caption='', width=300)
     image = Image.open('logo/wikipedia.png')
-    st.image(image, caption='', width=300, height=150)
-
-
-# In[ ]:
+    col1.image(image, caption='', width=300)
 
 
 elif add_selectbox == 'Process Flow':
@@ -554,13 +627,12 @@ elif add_selectbox == 'Recommender Engine':
 #             client_id=os.environ['client_id']
 #             client_secret=os.environ['client_secret']
         username = 'rheyannmagcalas'
-        client_id='1d47ad1284b845ea82fe5e5bb7152b7c'
-        client_secret='e2e512b1e97b478f96e820403e28c8b3'
+        client_id=''
+        client_secret=''
 
-#             username = os.environ['username']
         manager = SpotifyClientCredentials(client_id,client_secret)
         sp = spotipy.Spotify(client_credentials_manager=manager)
-        sp_playlist = spotipy.Spotify(auth='BQAcDCdE_1ta0WWndKFnQCny9qpVsZWwqKvCN9a6YOTnahyuEoK28uc9CpDCduP_k7wUnEwf49Arg4CiY1s8H60o1CyCCXH6Btxxj8C_q-0eY49NAzi_bUvmbqoJorEWqCHfo0epLSls0mvT_N41jzoapphy_FkQr5pqTDHmUM0mrFZWzXXmBh7L87iN')
+        sp_playlist = spotipy.Spotify(auth='')
         
         track_id = 0
         artist_name = ''
@@ -692,43 +764,15 @@ elif add_selectbox == 'Possible Business Strategies':
 elif add_selectbox == 'Contributors':
     st.subheader('Contributors')
     st.write('-----------------------------')
-    st.markdown("<ul>"                "<li>Danilo Jr. Gubaton</li>"                "<li>Fili Emerson Chua</li>"
-                "<li>John Barrion</li>"\
-                "<li>Justine Brian Santoalla </li>"\
-                "<li>Rhey Ann Magcalas</li>"\
+
+    st.markdown("<b>Mentor</b>: <a href='https://www.linkedin.com/in/johnbarrion/' target='_blank'>John Barrion</a>",
+                unsafe_allow_html=True)
+    st.markdown("<b>Team</b>",unsafe_allow_html=True)
+    st.markdown("<ul>"
+                "<li><a href='https://www.linkedin.com/in/dcgubatonjr/' target='_blank'>Danilo Jr. Gubaton</a></li>"
+                "<li><a href='https://www.linkedin.com/in/fili-emerson-chua/' target='_blank'>Fili Emerson Chua</a></li>"
+                "<li><a href='https://www.linkedin.com/in/jbsantoalla/' target='_blank'>"
+                "Justine Brian Santoalla </a></li>"
+                "<li><a href='https://www.linkedin.com/in/rhey-ann-magcalas-47541490/' target='_blank'>"
+                "Rhey Ann Magcalas</a></li>"
                  "</ul>", unsafe_allow_html=True)
-
-
-# In[ ]:
-
-
-else:
-    username = st.text_input('Username')
-    if username != '':
-        os.environ['username'] = username
-    
-    client_id = st.text_input('Client Id')
-    if client_id != '':
-        os.environ['client_id'] = client_id
-    
-    client_secret = st.text_input('Client Secret')
-    if client_secret != '':
-        os.environ['client_secret'] = client_secret
-    
-    user_token = st.text_input('User Token')
-    if user_token != '':
-        os.environ['user_token'] = user_token
-        
-    playlist_token = st.text_input('Playlist Token')
-    if playlist_token != '':
-        os.environ['playlist_token'] = playlist_token
-
-
-# In[11]:
-
-
-# with open('df_model.pkl', 'rb') as handle:
-#     sample_song = pickle.load(handle)
-    
-# sample_song.head(20)
-
